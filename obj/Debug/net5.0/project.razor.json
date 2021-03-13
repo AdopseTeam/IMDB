@@ -15608,6 +15608,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Movies/Index.cshtml",
+      "TargetPath": "Views\\Movies\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Home/Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -15615,6 +15620,21 @@
     {
       "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Movies/Create.cshtml",
+      "TargetPath": "Views\\Movies\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Movies/Details.cshtml",
+      "TargetPath": "Views\\Movies\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/HelloWorld/Welcome.cshtml",
+      "TargetPath": "Views\\HelloWorld\\Welcome.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15628,8 +15648,28 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Movies/Edit.cshtml",
+      "TargetPath": "Views\\Movies\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Shared/Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/HelloWorld/Index.cshtml",
+      "TargetPath": "Views\\HelloWorld\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/HelloWorld/Info.cshtml",
+      "TargetPath": "Views\\HelloWorld\\Info.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/giapa/Documents/MyProjects/IMDB/Views/Movies/Delete.cshtml",
+      "TargetPath": "Views\\Movies\\Delete.cshtml",
       "FileKind": "mvc"
     },
     {
