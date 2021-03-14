@@ -6,6 +6,14 @@
 
 <h1>Index</h1>
 
+<form asp-controller="Movies" asp-action="Index">
+    <p>
+        <input type="text" name="SearchString" placeholder="Search by Title" />
+        <input class="btn btn-primary" type="submit" value="Filter" />
+    </p>
+</form>
+
+
 <div class="row row-cols-1 row-cols-md-2">
         @foreach (var item in Model) {
             <div class="col mb-4">
