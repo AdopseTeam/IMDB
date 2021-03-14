@@ -20,15 +20,32 @@ namespace IMDB.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string movieGenre, string searchString)
         {
+            IQueryable<string> genreQuery = from m in _context.Movie
+                                    orderby m.Genre
+                                    select m.Genre;
+
             var movies = from m in _context.Movie
-                 select m;
-            if (!String.IsNullOrEmpty(searchString))
+                        select m;
+
+            if (!string.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(s => s.Title.Contains(searchString));
             }
-            return View(await movies.ToListAsync());
+
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genre == movieGenre);
+            }
+
+            var movieGenreVM = new MovieGenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Movies = await movies.ToListAsync()
+            };
+            ModelState.Clear();
+            return View(movieGenreVM);
         }
 
         // GET: Movies/Details/5
@@ -46,28 +63,6 @@ namespace IMDB.Controllers
                 return NotFound();
             }
 
-            return View(movie);
-        }
-
-        // GET: Movies/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Movies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Rating")] Movie movie)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(movie);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
             return View(movie);
         }
 
