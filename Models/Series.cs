@@ -1,16 +1,18 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
-namespace MvcMovie.Models{
-    public class Movie{
+namespace MvcSeries.Models
+{
+    public class Series
+    {
         public int Id { get; set; }
         public string Title { get; set; }
 
-        [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
+        public int Seasons { get; set; }
         public string Genre { get; set; }
         public decimal Rating { get; set; }
-        public decimal Budget { get; set; }
     }
 }

@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Data;
 using MvcMovie.Models;
+using MvcActor.Models;
+using MvcSeries.Models;
 
 namespace IMDB
 {
@@ -24,7 +21,9 @@ namespace IMDB
 
                 try
                 {
-                    SeedData.Initialize(services);
+                  SeedMovies.Initialize(services);
+                  SeedSeries.Initialize(services);
+                  SeedActors.Initialize(services);
                 }
                 catch (Exception ex)
                 {

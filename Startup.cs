@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
+using MvcActor.Data;
+using MvcSeries.Data;
 
 namespace IMDB
 {
@@ -22,19 +24,16 @@ namespace IMDB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<MvcMovieContext>(options =>
-        {
-            var connectionString = Configuration.GetConnectionString("MvcMovieContext");
+            services.AddDbContext<MvcMovieContext>(options => {
+            options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext"));
+            });
+            services.AddDbContext<MvcSeriesContext>(options => {
+            options.UseSqlite(Configuration.GetConnectionString("MvcSeriesContext"));
+            });
+            services.AddDbContext<MvcActorContext>(options => {
+            options.UseSqlite(Configuration.GetConnectionString("MvcActorContext"));
+            });
 
-            if (Environment.IsDevelopment())
-            {
-                options.UseSqlite(connectionString);
-            }
-            else
-            {
-                options.UseSqlServer(connectionString);
-            }
-        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

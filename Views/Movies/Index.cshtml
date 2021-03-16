@@ -1,4 +1,4 @@
-@model MvcMovie.Models.MovieGenreViewModel
+@model IEnumerable<MvcMovie.Models.Movie>
 
 @section Scripts{
   <script src='@Url.Content("~/wwwroot/js/site.js")'></script>
@@ -13,35 +13,24 @@
 <div class="row">
     <div class="col">
         <form asp-controller="Movies" asp-action="Index" style="display: inline-block;">
-            <div id="searchDiv" style="display: none;">
-                Category:
-                <select asp-for="MovieGenre" asp-items="Model.Genres" id="genre">
-                    <option value="">All</option>
-                </select>
-            </div>
-            <input id="title" type="text" asp-for="SearchString" placeholder="Search by Title" />
+            <input id="title" type="text" name="SearchString" placeholder="Search by Title" />
             <input class="btn btn-outline-primary" type="submit" value="Filter"/>
         </form>
-    </div>
-    <div class="col">
-        <div style="float: right;">
-            <button onclick="toggleAdvancedSearch()" class="btn btn-outline-primary">Advanced search</button>
-        </div>
     </div>
 </div>
 <br>
 
 <div class="row row-cols-1 row-cols-md-2">
-        @foreach (var item in Model.Movies) {
+        @foreach (var item in Model) {
             <div class="col mb-4">
             <div class="card" style="border-radius: 15px; border-width: thick;">
             <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
                 <div>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Movies[0].ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Movies[0].Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Movies[0].Rating):</strong> @Html.DisplayFor(modelItem => item.Rating)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Rating):</strong> @Html.DisplayFor(modelItem => item.Rating)</p>
                 </div> <br>
                 <a class ="btn btn-primary" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
             </div>
