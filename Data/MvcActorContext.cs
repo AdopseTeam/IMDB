@@ -8,6 +8,7 @@ namespace MvcActor.Data
         public MvcActorContext (DbContextOptions<MvcActorContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Actor> Actor { get; set; }

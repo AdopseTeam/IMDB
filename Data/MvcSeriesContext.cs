@@ -8,6 +8,7 @@ namespace MvcSeries.Data
         public MvcSeriesContext (DbContextOptions<MvcSeriesContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Series> Series { get; set; }
