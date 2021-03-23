@@ -40,7 +40,7 @@ In order to launch the desktop application you need [NODE](https://nodejs.org/en
 
 Then you need to add the Electron.Net package by running:
 ```bash
-dotnet add package ElectronNet.API
+dotnet tool install ElectronNET.CLI -g
 dotnet restore
 ```
 
