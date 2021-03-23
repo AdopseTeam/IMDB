@@ -8,6 +8,7 @@ namespace MvcMovie.Data
         public MvcMovieContext (DbContextOptions<MvcMovieContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Movie> Movie { get; set; }

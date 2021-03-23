@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MvcMovie.Models;
 using MvcActor.Models;
 using MvcSeries.Models;
+using ElectronNET.API;
 
 namespace IMDB
 {
@@ -39,6 +40,7 @@ namespace IMDB
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseElectron(args);
                     webBuilder.UseStartup<Startup>();
                 });
     }
