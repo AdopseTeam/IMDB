@@ -13,6 +13,5 @@ namespace MvcActor.Data
 
         public DbSet<Actor> Actor { get; set; }
 
-        public DbSet<MvcActor.Models.Actor> Series { get; set; }
     }
 }
