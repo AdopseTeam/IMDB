@@ -1,9 +1,7 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcActor.Data;
-using MvcSeries.Models;
 
 namespace IMDB.Controllers
 {
@@ -19,7 +17,7 @@ namespace IMDB.Controllers
         // GET: Actor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Series.ToListAsync());
+            return View(await _context.Actor.ToListAsync());
         }
 
         // GET: Actor/Details/5
@@ -30,14 +28,14 @@ namespace IMDB.Controllers
                 return NotFound();
             }
 
-            var series = await _context.Series
+            var actor = await _context.Actor
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (series == null)
+            if (actor == null)
             {
                 return NotFound();
             }
 
-            return View(series);
+            return View(actor);
         }
 
     }
