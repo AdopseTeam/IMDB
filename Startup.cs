@@ -9,6 +9,7 @@ using MvcActor.Data;
 using MvcSeries.Data;
 using System.Threading.Tasks;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 
 namespace IMDB
 {
@@ -64,7 +65,13 @@ namespace IMDB
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-                Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+                var options = new BrowserWindowOptions{
+                    Width = 1920,
+                    Height = 1080
+                };
+                Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(options));
+
+
         }
     }
 }
