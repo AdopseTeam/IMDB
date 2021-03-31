@@ -9,57 +9,69 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 
+namespace HTTP{
+    public static class Response{
+        public static JObject returnResponse(string URL, string urlParameters) {
+        HttpClient client =  new HttpClient();
+        client.BaseAddress = new Uri(URL);
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        HttpResponseMessage response = client.GetAsync(urlParameters).Result;
+        var GdataObjects = response.Content.ReadAsStringAsync().Result;
+        JObject joResponse = JObject.Parse(GdataObjects);
+        client.Dispose();
+        return joResponse;
+    }
+    }
+}
+
+
 namespace MvcMovie.Models
 {
     public static class SeedMovies
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            const string URL = "https://api.themoviedb.org/3/movie/popular";
-            string urlParameters = "?api_key=<api_key>&language=en-US&page=1";
-            HttpClient client =  new HttpClient();
-            client.BaseAddress = new Uri(URL);
-            // Add headers
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(urlParameters).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                // Parse the response body.
-                var dataObjects = response.Content.ReadAsStringAsync().Result;
-                JObject joResponse = JObject.Parse(dataObjects);
-                JArray ojObject = (JArray)joResponse["results"];
+            // Get movie genres
+            const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
+            string GurlParameters = "?api_key=<api_token>=en-US";
+            var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
+            JArray genrejObject = (JArray)genreResponse["genres"];
 
-                 using (var context = new MvcMovieContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<MvcMovieContext>>()))
-                {
-                // Look for any movies.
-                if (context.Movie.Any())
-                {
+            const string URL = "https://api.themoviedb.org/3/movie/popular";
+            string urlParameters = "?api_key=<api_token>&language=en-US&page=1";
+            var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
+            JArray movieObject = (JArray)movieReponse["results"];
+
+            using (var context = new MvcMovieContext(
+            serviceProvider.GetRequiredService<
+                DbContextOptions<MvcMovieContext>>()))
+            {
+            // Look for any movies.
+                if (context.Movie.Any()){
                     return;   // DB has been seeded
                 } else {
-                    foreach(var item in ojObject.Children()){
-                        context.Movie.Add(
-                            new Movie{
+                    // Loop through the movies
+                    foreach(var item in movieObject.Children()){
+                        var genre_id = (string)item["genre_ids"].First;
+                        // Loop through the genres to find the matching id
+                        foreach(var genreObj in genrejObject){
+                            if((string)genreObj["id"] == genre_id){
+                                var genre = (string)genreObj["name"];
+                                context.Movie.Add(
+                                new Movie{
                                     Id = (int)item["id"],
                                     Title = (string)item["original_title"],
                                     ReleaseDate = DateTime.Parse((string)item["release_date"]),
-                                    Genre = "Unknown",
+                                    Genre = genre,
                                     Rating = (int)item["vote_average"],
                                 }
                         );
+                            }
+                        }
                     }
                 }
-
                 context.SaveChanges();
-                }
             }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-            }
-            // Dispose once all HttpClient calls are complete. This is not necessary if the containing object will be disposed of; for example in this case the HttpClient instance will be disposed automatically when the application terminates so the following call is superfluous.
-            client.Dispose();
         }
     }
 }
