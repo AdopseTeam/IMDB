@@ -5,6 +5,9 @@ using MvcSeries.Data;
 using MvcActor.Data;
 using System;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
 
 namespace MvcMovie.Models
 {
@@ -12,56 +15,57 @@ namespace MvcMovie.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new MvcMovieContext(
+            const string URL = "https://api.themoviedb.org/3/movie/popular";
+            string urlParameters = "?api_key=<api_key>&language=en-US&page=1";
+            HttpClient client =  new HttpClient();
+            client.BaseAddress = new Uri(URL);
+            // Add headers
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(urlParameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                // Parse the response body.
+                var dataObjects = response.Content.ReadAsStringAsync().Result;
+                JObject joResponse = JObject.Parse(dataObjects);
+                JArray ojObject = (JArray)joResponse["results"];
+
+                 using (var context = new MvcMovieContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcMovieContext>>()))
-            {
+                {
                 // Look for any movies.
                 if (context.Movie.Any())
                 {
                     return;   // DB has been seeded
+                } else {
+                    foreach(var item in ojObject.Children()){
+                        context.Movie.Add(
+                            new Movie{
+                                    Id = (int)item["id"],
+                                    Title = (string)item["original_title"],
+                                    ReleaseDate = DateTime.Parse((string)item["release_date"]),
+                                    Genre = "Unknown",
+                                    Rating = (int)item["vote_average"],
+                                }
+                        );
+                    }
                 }
 
-                context.Movie.AddRange(
-                    new Movie
-                    {
-                        Title = "When Harry Met Sally",
-                        ReleaseDate = DateTime.Parse("1989-2-12"),
-                        Genre = "Romantic Comedy",
-                        Rating = 7.5M
-                    },
-
-                    new Movie
-                    {
-                        Title = "Ghostbusters ",
-                        ReleaseDate = DateTime.Parse("1984-3-13"),
-                        Genre = "Comedy",
-                        Rating = 8.9M
-                    },
-
-                    new Movie
-                    {
-                        Title = "Ghostbusters 2",
-                        ReleaseDate = DateTime.Parse("1986-2-23"),
-                        Genre = "Comedy",
-                        Rating = 6
-                    },
-
-                    new Movie
-                    {
-                        Title = "Rio Bravo",
-                        ReleaseDate = DateTime.Parse("1959-4-15"),
-                        Genre = "Western",
-                        Rating = 3.2M
-                    }
-                );
                 context.SaveChanges();
+                }
             }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+            // Dispose once all HttpClient calls are complete. This is not necessary if the containing object will be disposed of; for example in this case the HttpClient instance will be disposed automatically when the application terminates so the following call is superfluous.
+            client.Dispose();
         }
     }
 }
 
-namespace MvcSeries.Models {
+namespace MvcSeries.Models
+{
     public static class SeedSeries
     {
         public static void Initialize(IServiceProvider serviceProvider)
@@ -109,7 +113,8 @@ namespace MvcSeries.Models {
     }
 }
 
-namespace MvcActor.Models {
+namespace MvcActor.Models
+{
     public static class SeedActors
     {
         public static void Initialize(IServiceProvider serviceProvider)
