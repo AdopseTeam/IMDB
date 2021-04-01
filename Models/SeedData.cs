@@ -95,7 +95,7 @@ namespace MvcSeries.Models
             using (var context = new MvcSeriesContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcSeriesContext>>()))
-            {
+                {
                 // Look for any series.
                 if (context.Series.Any())
                 {
@@ -120,6 +120,7 @@ namespace MvcSeries.Models
                             }
                         }
                     }
+                }
                 context.SaveChanges();
             }
         }
