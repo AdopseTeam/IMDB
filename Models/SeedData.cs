@@ -33,20 +33,23 @@ namespace MvcMovie.Models
         {
             // Get movie genres
             const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
-            string GurlParameters = "?api_key=<api_token>=en-US";
+            string GurlParameters = "?api_key=<api_key>&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
-            const string URL = "https://api.themoviedb.org/3/movie/popular";
-            string urlParameters = "?api_key=<api_token>&language=en-US&page=1";
-            var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
-            JArray movieObject = (JArray)movieReponse["results"];
+            JArray movieObject = new JArray();
+            for(int i=0; i<20; i++){
+                const string URL = "https://api.themoviedb.org/3/movie/popular";
+                string urlParameters = "?api_key=<api_key>&language=en-US&page=1";
+                var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
+                movieObject.Merge((JArray)movieReponse["results"]);
+            }
 
             using (var context = new MvcMovieContext(
             serviceProvider.GetRequiredService<
                 DbContextOptions<MvcMovieContext>>()))
             {
-            // Look for any movies.
+                // Look for any movies.
                 if (context.Movie.Any()){
                     return;   // DB has been seeded
                 } else {
@@ -59,7 +62,6 @@ namespace MvcMovie.Models
                                 var genre = (string)genreObj["name"];
                                 context.Movie.Add(
                                 new Movie{
-                                    Id = (int)item["id"],
                                     Title = (string)item["original_title"],
                                     ReleaseDate = DateTime.Parse((string)item["release_date"]),
                                     Genre = genre,
@@ -83,14 +85,17 @@ namespace MvcSeries.Models
         public static void Initialize(IServiceProvider serviceProvider)
         {
             const string GURL = "https://api.themoviedb.org/3/genre/tv/list";
-            string GurlParameters = "?api_key=<api_token>=en-US";
+            string GurlParameters = "?api_key=<api_key>&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
-            const string URL = "https://api.themoviedb.org/3/tv/popular";
-            string urlParameters = "?api_key=<api_token>&language=en-US&page=1";
-            var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
-            JArray seriesObject = (JArray)seriesReponse["results"];
+            JArray seriesObject = new JArray();
+            for(int i=0; i<20; i++){
+                const string URL = "https://api.themoviedb.org/3/tv/popular";
+                string urlParameters = "?api_key=<api_key>&language=en-US&page={i}";
+                var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
+                seriesObject.Merge((JArray)seriesReponse["results"]);
+            }
 
             using (var context = new MvcSeriesContext(
                 serviceProvider.GetRequiredService<
@@ -109,12 +114,11 @@ namespace MvcSeries.Models
                             if((string)genreObj["id"] == genre_id){
                                 var genre = (string)genreObj["name"];
                                 context.Series.Add(
-                                new Series{
-                                    Id = (int)item["id"],
-                                    Title = (string)item["original_name"],
-                                    ReleaseDate = DateTime.Parse((string)item["first_air_date"]),
-                                    Genre = genre,
-                                    Rating = (int)item["vote_average"],
+                                    new Series{
+                                        Title = (string)item["original_name"],
+                                        ReleaseDate = DateTime.Parse((string)item["first_air_date"]),
+                                        Genre = genre,
+                                        Rating = (int)item["vote_average"],
                                 }
                         );
                             }
@@ -133,6 +137,15 @@ namespace MvcActor.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
+
+            JArray actorsObject = new JArray();
+            for(int i=0; i<20; i++){
+                const string URL = "https://api.themoviedb.org/3/person/popular";
+                string urlParameters = "?api_key=<api_key>&language=en-US&page=1";
+                var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
+                actorsObject.Merge((JArray)seriesReponse["results"]);
+            }
+
             using (var context = new MvcActorContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcActorContext>>()))
@@ -141,30 +154,17 @@ namespace MvcActor.Models
                 if (context.Actor.Any())
                 {
                     return;   // DB has been seeded
-                }
-
-                context.Actor.AddRange(
-                    new Actor
-                    {
-                        FirstName = "Tom",
-                        Birthday = DateTime.Parse("1996-2-12"),
-                        LastName = "Holldand"
-                    },
-
-                    new Actor
-                    {
-                        FirstName = "Dwayne",
-                        Birthday = DateTime.Parse("1972-3-13"),
-                        LastName = "Johnson"
-                    },
-
-                    new Actor
-                    {
-                        FirstName = "Emma",
-                        Birthday = DateTime.Parse("1990-2-23"),
-                        LastName = "Watchon"
+                } else {
+                    foreach(var item in actorsObject.Children()){
+                        string[] names = ((string)item["name"]).Split(" ");
+                        context.Actor.Add(
+                        new Actor{
+                            LastName = names[names.Length -1],
+                            FirstName = String.Join(" ", names.Take(names.Length-1)),
+                        }
+                        );
                     }
-                );
+                }
                 context.SaveChanges();
             }
         }
