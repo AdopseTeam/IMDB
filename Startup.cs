@@ -10,6 +10,7 @@ using MvcSeries.Data;
 using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
+using System;
 
 namespace IMDB
 {
@@ -18,26 +19,29 @@ namespace IMDB
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-            Environment = env;
+            WebEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; }
+        public IWebHostEnvironment WebEnvironment { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddRazorPages();
-            services.AddDbContext<MvcMovieContext>(options => {
-            options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext"));
-            });
-            services.AddDbContext<MvcSeriesContext>(options => {
-            options.UseSqlite(Configuration.GetConnectionString("MvcSeriesContext"));
-            });
-            services.AddDbContext<MvcActorContext>(options => {
-            options.UseSqlite(Configuration.GetConnectionString("MvcActorContext"));
-            });
+            services.AddDbContext<MvcMovieContext>(options =>
+                options.UseNpgsql(GetHerokuConnectionString()));
+            services.AddDbContext<MvcActorContext>(options =>
+                options.UseNpgsql(GetHerokuConnectionString()));
+            services.AddDbContext<MvcSeriesContext>(options =>
+                options.UseNpgsql(GetHerokuConnectionString()));
+        }
 
+        private string GetHerokuConnectionString() {
+            string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUri = new Uri(connectionUrl);
+            string db = databaseUri.LocalPath.TrimStart('/');
+            string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            return $"User ID={userInfo[0]};Password={userInfo[1]};Host={databaseUri.Host};Port={databaseUri.Port};Database={db};Pooling=true;SSL Mode=Require;Trust Server Certificate=True;";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
