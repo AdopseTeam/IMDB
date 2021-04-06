@@ -36,12 +36,17 @@ namespace IMDB
             host.Run();
         }
 
+        public static string HostPort => Environment.GetEnvironmentVariable("PORT")??"5000";
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseElectron(args);
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(options =>
+                    {
+                        options.ListenAnyIP(Int32.Parse(HostPort));
+                    });
                 });
     }
 }

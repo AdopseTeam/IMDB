@@ -12,4 +12,4 @@ RUN dotnet publish -c Release -o /out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /IMDB
 COPY --from=base /out .
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet IMDB.dll
+CMD dotnet IMDB.dll
