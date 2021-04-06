@@ -62,6 +62,7 @@ namespace IMDB
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -69,6 +70,7 @@ namespace IMDB
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
                 var options = new BrowserWindowOptions{
                     Width = 1920,
