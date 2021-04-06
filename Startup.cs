@@ -28,26 +28,16 @@ namespace IMDB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddEntityFrameworkNpgsql().AddDbContext<MvcMovieContext>(options =>
+            services.AddDbContext<MvcMovieContext>(options =>
                 options.UseNpgsql(GetHerokuConnectionString()));
-            services.AddEntityFrameworkNpgsql().AddDbContext<MvcActorContext>(options =>
+            services.AddDbContext<MvcActorContext>(options =>
                 options.UseNpgsql(GetHerokuConnectionString()));
-            services.AddEntityFrameworkNpgsql().AddDbContext<MvcSeriesContext>(options =>
+            services.AddDbContext<MvcSeriesContext>(options =>
                 options.UseNpgsql(GetHerokuConnectionString()));
-            // This code should be uncommented when running local db
-            // services.AddDbContext<MvcMovieContext>(options => {
-            // options.UseSqlite(Configuration.GetConnectionString("MvcMovieContext"));
-            // });
-            // services.AddDbContext<MvcSeriesContext>(options => {
-            // options.UseSqlite(Configuration.GetConnectionString("MvcSeriesContext"));
-            // });
-            // services.AddDbContext<MvcActorContext>(options => {
-            // options.UseSqlite(Configuration.GetConnectionString("MvcActorContext"));
-            // });
         }
 
         private string GetHerokuConnectionString() {
-             string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
             string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
