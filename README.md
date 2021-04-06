@@ -25,9 +25,6 @@ After installing the previous you need to setup the context files by doing:
 dotnet ef migrations add InitialCreate --context MvcActorContext
 dotnet ef migrations add InitialCreate --context MvcMovieContext
 dotnet ef migrations add InitialCreate --context MvcSeriesContext
-dotnet ef database update --context MvcActorContext
-dotnet ef database update --context MvcMovieContext
-dotnet ef database update --context MvcSeriesContext
 ```
 
 ### Launching the web app:
