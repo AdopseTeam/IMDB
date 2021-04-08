@@ -37,7 +37,7 @@ namespace IMDB
         }
 
         private string GetHerokuConnectionString() {
-            string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            string connectionUrl = "postgres://ldetimjpwraxvx:8dd3d702392b159b4e1503c1b86ed15ea1834349f8c0826fa8262cb214923f50@ec2-54-155-87-214.eu-west-1.compute.amazonaws.com:5432/d2jv7d6pmkrc6j";
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
             string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
