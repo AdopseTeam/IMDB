@@ -1,4 +1,13 @@
 ## IMDB Clone
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/AdopseTeam/IMDB/graphs/commit-activity)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https://github.com/AdopseTeam/IMDB)
+
+
+### Contributors
+![GitHub Contributors Image](https://contrib.rocks/image?repo=AdopseTeam/IMDB)
+
 
 ### Application Tech Stack
 <img align="left" alt="C#"  width="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/csharp/csharp.png" /> 
@@ -44,4 +53,11 @@ dotnet restore
 Then you can run the desktop app:
 ```bash
 electronize start
+```
+
+You can build the desktop app by running:
+```bash
+electronize build /target win  (Windows)
+electronize build /target linux (Linux)
+electronize build /target osx (Mac)
 ```
