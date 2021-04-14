@@ -32,11 +32,15 @@ namespace MvcSeries.Data
                 foreach(var genreObj in genrejObject){
                     if((string)genreObj["id"] == genre_id){
                         var genre = (string)genreObj["name"];
+                        var release = (string)item["first_air_date"];
+                        if(String.IsNullOrEmpty(release)){
+                            release = "10/10/2010";
+                        }
                         modelBuilder.Entity<Series>().HasData(
                             new Series{
                                 Id = counter,
                                 Title = (string)item["original_name"],
-                                ReleaseDate = DateTime.Parse((string)item["first_air_date"]),
+                                ReleaseDate = DateTime.Parse(release),
                                 Genre = genre,
                                 Rating = (decimal)item["vote_average"],
                         }
