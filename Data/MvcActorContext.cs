@@ -15,52 +15,42 @@ namespace MvcActor.Data
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder){
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             JArray actorsObject = new JArray();
-            JArray actorDetails = new JArray();
+
             string detailsUrlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
-            for (int i=1; i<20; i++){
+            for (int i = 1; i < 20; i++) {
                 const string URL = "https://api.themoviedb.org/3/person/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 actorsObject.Merge((JArray)seriesReponse["results"]);
             }
             int counter = 1;
-            foreach(var item in actorsObject.Children()){
+            foreach (var item in actorsObject.Children()) {
                 string[] names = ((string)item["name"]).Split(" ");
-                modelBuilder.Entity<Actor>().HasData(
-                    new Actor{
-                        ActorId= (int)item["id"],
-                        Id = counter,
-                        LastName = names[names.Length -1],
-                        FirstName = String.Join(" ", names.Take(names.Length-1)),
-                    }
-                );
+                Actor actor = new Actor
+                {
+                    ActorId = (int)item["id"],
+                    Id = counter,
+                    LastName = names[names.Length - 1],
+                    FirstName = String.Join(" ", names.Take(names.Length - 1)),
+                };
+                string detailsURL = $"https://api.themoviedb.org/3/person/{actor.ActorId}";
+                var detailsResponse = HTTP.Response.returnResponse(detailsURL, detailsUrlParameters);
+                JObject actorDetails = new JObject();
+                //actorDetails = JObject.Parse(detailsResponse);
+
+                actor.Bio = (string)detailsResponse["biography"];
+                actor.Birthday = (DateTime)detailsResponse["birthday"];
+                actor.Profile_pic_path = (string)detailsResponse["profile_path"];
+
+                modelBuilder.Entity<Actor>().HasData(actor);
                 counter += 1;
             }
 
-            
-            
-           
-            foreach (var item in Actor)   
-            {
-                string detailsURL = $"https://api.themoviedb.org/3/person/{item.ActorId}";
-                
-                var detailsResponse = HTTP.Response.returnResponse(detailsURL, detailsUrlParameters);
-                actorDetails =(JArray)detailsResponse["details"];
-                foreach (var detail in actorDetails) {
-                    
-                        item.Bio = (string)detail["biography"],
-                        item.Birthday=(DateTime)detail["birthday"],
-                        item.Profile_pic_path=(string)detail["profile_path"]
-                       
-                }
-               
-            }
-          
         }
         public DbSet<Actor> Actor { get; set; }
 
 
-    }
-}
+    };
+};
