@@ -37,20 +37,14 @@ namespace MvcActor.Data
                 };
                 string detailsURL = $"https://api.themoviedb.org/3/person/{actor.ActorId}";
                 var detailsResponse = HTTP.Response.returnResponse(detailsURL, detailsUrlParameters);
-                JObject actorDetails = new JObject();
-                //actorDetails = JObject.Parse(detailsResponse);
-
                 actor.Bio = (string)detailsResponse["biography"];
                 actor.Birthday = (DateTime)detailsResponse["birthday"];
                 actor.Profile_pic_path = (string)detailsResponse["profile_path"];
-
                 modelBuilder.Entity<Actor>().HasData(actor);
                 counter += 1;
-            }
+            };
 
         }
         public DbSet<Actor> Actor { get; set; }
-
-
     };
 };
