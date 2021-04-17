@@ -43,7 +43,9 @@ namespace MvcSeries.Data
                                 ReleaseDate = DateTime.Parse(release),
                                 Genre = genre,
                                 Rating = (decimal)item["vote_average"],
-                        }
+                                Poster_path = (string)item["poster_path"],
+                                Overview = (string)item["overview"]
+                            }
                         );
                     }
                     counter += 1;
