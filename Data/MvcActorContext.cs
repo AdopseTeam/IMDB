@@ -18,10 +18,10 @@ namespace MvcActor.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             JArray actorsObject = new JArray();
 
-            string detailsUrlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+            string detailsUrlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
             for (int i = 1; i < 20; i++) {
                 const string URL = "https://api.themoviedb.org/3/person/popular";
-                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
+                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 actorsObject.Merge((JArray)seriesReponse["results"]);
             }
@@ -38,7 +38,7 @@ namespace MvcActor.Data
                 string detailsURL = $"https://api.themoviedb.org/3/person/{actor.ActorId}";
                 var detailsResponse = HTTP.Response.returnResponse(detailsURL, detailsUrlParameters);
                 actor.Bio = (string)detailsResponse["biography"];
-                actor.Birthday = (DateTime)detailsResponse["birthday"];
+                actor.Birthday = DateTime.Parse((string)detailsResponse["birthday"] ?? "10/10/2010");
                 actor.Profile_pic_path = (string)detailsResponse["profile_path"];
                 modelBuilder.Entity<Actor>().HasData(actor);
                 counter += 1;
