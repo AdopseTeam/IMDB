@@ -39,6 +39,8 @@ namespace MvcMovie.Data
                                 ReleaseDate = DateTime.Parse((string)item["release_date"]??"10/10/2010"),
                                 Genre = genre,
                                 Rating = (decimal)item["vote_average"],
+                                Poster_path= (string)item["poster_path"],
+                                Overview=(string)item["overview"]
                         }
                 );
                     }

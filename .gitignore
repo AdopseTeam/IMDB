@@ -8,4 +8,4 @@ packages
 Migrations
 *.db
 .vs/
-.sln
+*.sln
