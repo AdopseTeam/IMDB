@@ -22,12 +22,14 @@ namespace IMDB.Controllers
         // GET: Movies
         public async Task<IActionResult> Index(string movieGenre, string searchString)
         {
+            
             var movies = from m in _context.Movie
                         select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(s => s.Title.Contains(searchString));
+                string lowerMovie = searchString.ToLower();
+                movies = movies.Where(s => s.Title.ToLower().Contains(lowerMovie));
             }
 
             return View(await movies.ToListAsync());
