@@ -1,3 +1,4 @@
+using IMDB.Models;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
 using Newtonsoft.Json.Linq;
@@ -14,14 +15,14 @@ namespace MvcMovie.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
-            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
             for(int i=1; i<10; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
-                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
+                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 movieObject.Merge((JArray)movieReponse["results"]);
             }
@@ -32,8 +33,8 @@ namespace MvcMovie.Data
                 foreach(var genreObj in genrejObject){
                     if((string)genreObj["id"] == genre_id){
                         var genre = (string)genreObj["name"];
-                        modelBuilder.Entity<Movie>().HasData(
-                            new Movie{
+                        modelBuilder.Entity<Movies>().HasData(
+                            new Movies{
                                 Id = counter,
                                 Title = (string)item["original_title"],
                                 ReleaseDate = DateTime.Parse((string)item["release_date"]??"10/10/2010"),
@@ -49,6 +50,8 @@ namespace MvcMovie.Data
             }
         }
 
-        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Movies> Movie { get; set; }
+        public DbSet<Watchlist> Watchlists { get; set; }
+
     }
 }

@@ -1,4 +1,6 @@
-@model MvcMovie.Models.Movie
+@model MvcMovie.Models.Movies
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
@@ -48,6 +50,17 @@
         </dd>
     </dl>
 </div>
+        @if(SignInManager.IsSignedIn(User))
+        { 
+        <div class="row">
+            <a class="btn btn-primary pull-right"
+             asp-action="New" 
+             asp-controller="Watchlist" 
+             asp-route-CurrentMovieId="@Model.Id">
+                Add to Watchlist
+            </a>
+        </div>
+        }
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

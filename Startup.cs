@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using System;
+using IMDB.Repo;
+using IMDB.Models;
+using Microsoft.AspNetCore.Identity;
+using IMDB.Data;
 
 namespace IMDB
 {
@@ -34,10 +38,26 @@ namespace IMDB
                 options.UseNpgsql(GetHerokuConnectionString()));
             services.AddDbContext<MvcSeriesContext>(options =>
                 options.UseNpgsql(GetHerokuConnectionString()));
+
+            services.AddTransient<IWatchlistRepo, WatchlistRepo>();
+
+/*            services.AddDbContext<AuthUserDBContext>(options =>
+                    options.UseNpgsql(GetHerokuConnectionString()));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<AuthUserDBContext>()
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+           
+
+            services.AddRazorPages();*/
+
+
+
         }
 
         private string GetHerokuConnectionString() {
-            string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            string connectionUrl = "postgres://xsoczdteqywkuc:3ba7a0591aab685bf97bed07c92bc3edaef0ac6c9245b1ae31fb68cb68a406a7@ec2-54-155-92-75.eu-west-1.compute.amazonaws.com:5432/d4lfkc2vp5brs5";
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
             string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
@@ -80,5 +100,6 @@ namespace IMDB
 
 
         }
+
     }
 }

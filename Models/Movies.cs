@@ -1,8 +1,10 @@
+using IMDB.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcMovie.Models{
-    public class Movie{
+    public class Movies{
         public int Id { get; set; }
         public string Title { get; set; }
         public string Overview { get; set; }
@@ -13,5 +15,9 @@ namespace MvcMovie.Models{
         public string Genre { get; set; }
         public decimal Rating { get; set; }
         public decimal Budget { get; set; }
+
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
+        public List<Watchlist> Watchlists { get; set; }
     }
 }
