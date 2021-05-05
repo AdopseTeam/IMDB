@@ -15,14 +15,14 @@ namespace MvcMovie.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
-            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
             for(int i=1; i<10; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 movieObject.Merge((JArray)movieReponse["results"]);
             }

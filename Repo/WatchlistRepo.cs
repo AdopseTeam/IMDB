@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MvcMovie.Data;
+using Npgsql;
+using Microsoft.AspNetCore.Identity;
 
 namespace IMDB.Repo
 {
@@ -26,10 +28,10 @@ namespace IMDB.Repo
 
         public List<Watchlist> GetUserWatchlist(string userId)
         {
-           return _context.Watchlists
-                .Include(w=>w.Movie)
-                .Where(w=>w.UserId.Equals(userId))
-                .ToList();
+            return _context.Watchlists
+                 .Include(w => w.Movie)
+                 .Where(w => w.UserId.Equals(userId))
+                 .ToList();
         }
 
         public void Remove(Watchlist watchlist)
@@ -47,12 +49,18 @@ namespace IMDB.Repo
 
         public void AddUserIdToAppUserTable(string CurrentUserId)
         {
+            var flag = _context.Set<ApplicationUser>().Where(u => u.Id == CurrentUserId).FirstOrDefault();
+            if (flag == null) { 
             var AppUser = new ApplicationUser
             {
-                Id = CurrentUserId
+            Id = CurrentUserId
             };
             _context.Add(AppUser);
             _context.SaveChanges();
+            }
         }
+
+
+
     }
 }
