@@ -51,7 +51,8 @@ namespace IMDB.Repo
             {
                 Id = CurrentUserId
             };
-
+            _context.Add(AppUser);
+            _context.SaveChanges();
         }
     }
 }
