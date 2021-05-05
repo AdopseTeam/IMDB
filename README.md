@@ -41,6 +41,33 @@ dotnet ef migrations add InitialCreate --context MvcSeriesContext
 dotnet run
 ```
 
+### Using VisualStudio:
+
+First, make sure you have installed [ASP.NET Core](https://dotnet.microsoft.com/download) Core and [Visual Studio](https://visualstudio.microsoft.com/vs/)
+
+After cloning or downloading the project, ensure the tool EF was already installed. You can find it by running the command:
+
+``` bash
+dotnet tool install --global dotnet-ef
+```
+
+Open a command prompt and execute the following commands:
+
+```bash
+dotnet restore
+dotnet tool restore
+```
+
+Setup the context files by doing:
+
+``` bash
+dotnet ef migrations add InitialCreate --context MvcActorContext
+dotnet ef migrations add InitialCreate --context MvcMovieContext
+dotnet ef migrations add InitialCreate --context MvcSeriesContext
+```
+
+Select the "IMDB.csproj" as startup item and run the application 
+
 ### Launching the desktop app:
 In order to launch the desktop application you need [NODE](https://nodejs.org/en/download/) installed.
 
