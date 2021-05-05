@@ -29,13 +29,6 @@ Then you need to install some tool by running the following commands:
 dotnet tool install --global dotnet-ef
 ```
 
-After installing the previous you need to setup the context files by doing:
-``` bash
-dotnet ef migrations add InitialCreate --context MvcActorContext
-dotnet ef migrations add InitialCreate --context MvcMovieContext
-dotnet ef migrations add InitialCreate --context MvcSeriesContext
-```
-
 ### Launching the web app:
 ```bash
 dotnet run
@@ -56,14 +49,6 @@ Open a command prompt and execute the following commands:
 ```bash
 dotnet restore
 dotnet tool restore
-```
-
-Setup the context files by doing:
-
-``` bash
-dotnet ef migrations add InitialCreate --context MvcActorContext
-dotnet ef migrations add InitialCreate --context MvcMovieContext
-dotnet ef migrations add InitialCreate --context MvcSeriesContext
 ```
 
 Select the "IMDB.csproj" as startup item and run the application 
