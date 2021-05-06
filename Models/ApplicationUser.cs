@@ -9,7 +9,7 @@ namespace IMDB.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public List<Movies> MoviesList { get; set; }
+        public List<Movie> MoviesList { get; set; }
         public List<Watchlist> Watchlists { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace IMDB.Data
                 .WithOne(u => u.User)
                 .IsRequired();
 
-            builder.Entity<MvcMovie.Models.Movies>()
+            builder.Entity<MvcMovie.Models.Movie>()
                 .HasMany(w => w.Watchlists)
                 .WithOne(m => m.Movie)
                 .IsRequired();
