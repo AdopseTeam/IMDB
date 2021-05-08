@@ -1,5 +1,6 @@
 ﻿using System;
 using IMDB.Data;
+using IMDB.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -27,8 +28,9 @@ namespace IMDB.Areas.Identity
                 services.AddDbContext<AuthUserDBContext>(options =>
                     options.UseNpgsql(GetHerokuConnectionString()));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<AuthUserDBContext>();
+
             });
         }
     }

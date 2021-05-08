@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using System;
+using IMDB.Repo;
+using IMDB.Models;
+using Microsoft.AspNetCore.Identity;
+using IMDB.Data;
 
 namespace IMDB
 {
@@ -34,6 +38,22 @@ namespace IMDB
                 options.UseNpgsql(GetHerokuConnectionString()));
             services.AddDbContext<MvcSeriesContext>(options =>
                 options.UseNpgsql(GetHerokuConnectionString()));
+
+            services.AddTransient<IWatchlistRepo, WatchlistRepo>();
+
+/*            services.AddDbContext<AuthUserDBContext>(options =>
+                    options.UseNpgsql(GetHerokuConnectionString()));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<AuthUserDBContext>()
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+           
+
+            services.AddRazorPages();*/
+
+
+
         }
 
         private string GetHerokuConnectionString() {
@@ -80,5 +100,6 @@ namespace IMDB
 
 
         }
+
     }
 }

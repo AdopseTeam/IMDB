@@ -1,3 +1,4 @@
+using IMDB.Models;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
 using Newtonsoft.Json.Linq;
@@ -50,5 +51,7 @@ namespace MvcMovie.Data
         }
 
         public DbSet<Movie> Movie { get; set; }
+        public DbSet<Watchlist> Watchlists { get; set; }
+
     }
 }
