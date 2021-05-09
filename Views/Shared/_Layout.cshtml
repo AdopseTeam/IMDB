@@ -11,9 +11,9 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="img/imdblogo1.svg"></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/imdblogo1.svg"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                    <img src="img/menu1.svg">
+                    <img src="~/img/menu1.svg">
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
@@ -32,7 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <div class="navbar-collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <div class="navbar-collapse d-md-inline-flex flex-md-row-reverse">
                             <partial name="_LoginPartial.cshtml" />
                         </div>
                     </ul>
