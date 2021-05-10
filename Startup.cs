@@ -41,19 +41,6 @@ namespace IMDB
 
             services.AddTransient<IWatchlistRepo, WatchlistRepo>();
 
-/*            services.AddDbContext<AuthUserDBContext>(options =>
-                    options.UseNpgsql(GetHerokuConnectionString()));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<AuthUserDBContext>()
-            .AddDefaultTokenProviders()
-            .AddDefaultUI();
-           
-
-            services.AddRazorPages();*/
-
-
-
         }
 
         private string GetHerokuConnectionString() {
