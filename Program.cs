@@ -1,11 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-// using MvcMovie.Models;
-// using MvcActor.Models;
-// using MvcSeries.Models;
 using ElectronNET.API;
 
 namespace IMDB
