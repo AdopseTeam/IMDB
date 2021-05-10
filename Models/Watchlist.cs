@@ -10,7 +10,7 @@ namespace IMDB.Models
         public int Id { get; set; }
         public int movieId { get; set; }
         public string UserId { get; set; }
-        public MvcMovie.Models.Movie Movie { get; set; }
+        public MvcMovie.Models.Movies Movie { get; set; }
         public ApplicationUser User {get;set;}
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     

@@ -16,7 +16,7 @@ namespace IMDB.Data
             : base(options)
         {
         }
-        //public DbSet<MvcMovie.Models.Movie> Movies { get; set; }
+        //public DbSet<MvcMovie.Models.Movies> Movies { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -26,7 +26,7 @@ namespace IMDB.Data
                 .WithOne(u => u.User)
                 .IsRequired();
 
-            builder.Entity<MvcMovie.Models.Movie>()
+            builder.Entity<MvcMovie.Models.Movies>()
                 .HasMany(w => w.Watchlists)
                 .WithOne(m => m.Movie)
                 .IsRequired();
