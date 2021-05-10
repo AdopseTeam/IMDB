@@ -10,13 +10,13 @@
                 <div class="card" style="width: 15rem;">
                     <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold">@watchlist.Movie.Title</h5>
+                        <h5 class="card-title font-weight-bold">@watchlist.Movies.Title</h5>
                         <div>
-                            <p class="card-text"><strong>Release Date:</strong> @watchlist.Movie.ReleaseDate</p>
-                            <p class="card-text"><strong>Genre:</strong>@watchlist.Movie.Genre</p>
-                            <p class="card-text"><strong>Rating:</strong>@watchlist.Movie.Rating</p>
+                            <p class="card-text"><strong>Release Date:</strong> @watchlist.Movies.ReleaseDate</p>
+                            <p class="card-text"><strong>Genre:</strong>@watchlist.Movies.Genre</p>
+                            <p class="card-text"><strong>Rating:</strong>@watchlist.Movies.Rating</p>
                         </div> <br>
-                        <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@watchlist.Movie.Id">More info</a>
+                        <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@watchlist.Movies.Id">More info</a>
                         <a class="btn btn-warning" asp-action="Remove" asp-controller="Watchlist" asp-route-id="@watchlist.Id">Remove</a>
                     </div>
 
