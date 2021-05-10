@@ -1,31 +1,27 @@
 ﻿@model List<Watchlist>
 
-<h2>My Watchlist</h2>
+<h2 class="title">My Watchlist</h2>
 
-<div class="row">
-     <table class="table">
-         <thead>
-             <tr>
-                 <th>id</th>
-                 <th>Movie</th>
-                 <th>Actions</th>
-             </tr>
-         </thead>
-         <tbody>
-             @foreach (var watchlist in @Model)
-            {
-                <tr>
-                    <td>
-                        @watchlist.Id
-                    </td>
-                    <td>
-                        @watchlist.Movie.Title
-                    </td>
-                    <td>
-                        <a asp-action="Remove" asp-controller="Watchlist" asp-route-id="@watchlist.Id">Remove</a>
-                    </td>
-                </tr>
-            }
-         </tbody>
-     </table>
+<div class="container2">
+    <div class="row">
+        @foreach (var watchlist in @Model)
+        {
+            <div class="col mb-4">
+                <div class="card" style="width: 15rem;">
+                    <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">@watchlist.Movie.Title</h5>
+                        <div>
+                            <p class="card-text"><strong>Release Date:</strong> @watchlist.Movie.ReleaseDate</p>
+                            <p class="card-text"><strong>Genre:</strong>@watchlist.Movie.Genre</p>
+                            <p class="card-text"><strong>Rating:</strong>@watchlist.Movie.Rating</p>
+                        </div> <br>
+                        <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@watchlist.Movie.Id">More info</a>
+                        <a class="btn btn-warning" asp-action="Remove" asp-controller="Watchlist" asp-route-id="@watchlist.Id">Remove</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
 </div>

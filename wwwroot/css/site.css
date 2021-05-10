@@ -91,3 +91,10 @@ html, body{
   border-color: #E26001;
 }
 
+a{
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
