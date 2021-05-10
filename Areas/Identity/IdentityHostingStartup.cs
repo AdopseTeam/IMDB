@@ -16,7 +16,7 @@ namespace IMDB.Areas.Identity
 
         private string GetHerokuConnectionString()
         {
-            string connectionUrl = "postgres://xsoczdteqywkuc:3ba7a0591aab685bf97bed07c92bc3edaef0ac6c9245b1ae31fb68cb68a406a7@ec2-54-155-92-75.eu-west-1.compute.amazonaws.com:5432/d4lfkc2vp5brs5";
+            string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
