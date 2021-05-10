@@ -18,6 +18,8 @@ namespace MvcMovie.Models{
 
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }
-        public List<Watchlist> Watchlists { get; set; }
+        public List<Watchlist> Watchlist { get; set; }
+        public List<MvcComments.Models.Comments> Comments { get; set; }
+        public List<MvcActor.Models.Actor> Actor {get; set;}
     }
 }

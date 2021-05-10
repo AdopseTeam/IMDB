@@ -22,27 +22,27 @@ namespace IMDB.Repo
 
         public void Create(Watchlist watchlist)
         {
-            _context.Watchlists.Add(watchlist);
+            _context.Watchlist.Add(watchlist);
             _context.SaveChanges();
         }
 
         public List<Watchlist> GetUserWatchlist(string userId)
         {
-            return _context.Watchlists
-                 .Include(w => w.Movie)
+            return _context.Watchlist
+                 .Include(w => w.Movies)
                  .Where(w => w.UserId.Equals(userId))
                  .ToList();
         }
 
         public void Remove(Watchlist watchlist)
         {
-            _context.Watchlists.Remove(watchlist);
+            _context.Watchlist.Remove(watchlist);
             _context.SaveChanges();
         }
 
         public Watchlist GetWatchlist(int Id)
         {
-            return _context.Watchlists.FirstOrDefault(w => w.Id == Id);
+            return _context.Watchlist.FirstOrDefault(w => w.Id == Id);
 
         }
 
@@ -50,7 +50,7 @@ namespace IMDB.Repo
         public void AddUserIdToAppUserTable(string CurrentUserId)
         {
             var flag = _context.Set<ApplicationUser>().Where(u => u.Id == CurrentUserId).FirstOrDefault();
-            if (flag == null) { 
+            if (flag == null) {
             var AppUser = new ApplicationUser
             {
             Id = CurrentUserId
