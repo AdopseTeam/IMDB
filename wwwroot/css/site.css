@@ -47,25 +47,12 @@ html, body{
   padding: 1rem;
 }
 
-<<<<<<< HEAD
 /*---Movie Cards --*/
 .card{
   background-color: #000000;
   position: relative;
   margin-top: 20px;
 }
-=======
-/* Sticky footer styles
--------------------------------------------------- */
-/*html {
-  font-size: 70px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}*/
->>>>>>> 1558996 (add logo)
 
 /*---Movie Cards Div --*/
 .container2{
