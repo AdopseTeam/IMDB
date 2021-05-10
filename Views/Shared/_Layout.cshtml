@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - IMDB</title>
+    <title>@ViewData["Title"] - REview</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/imdblogo1.svg"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/reviewlogo.svg"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"> 
                     <img src="~/img/menu1.svg">
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Actor" asp-action="Index">Actors</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
                         <div class="navbar-collapse d-md-inline-flex flex-md-row-reverse">
                             <partial name="_LoginPartial.cshtml" />
                         </div>
@@ -38,7 +41,7 @@
         </nav>
     </header>
     <div class="main fill">
-        <main role="main" class="pb-3">
+        <main role="main" class="pt-6 pb-3">
             @RenderBody()
         </main>
     </div>
