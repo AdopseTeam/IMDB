@@ -22,8 +22,8 @@ namespace IMDB.Controllers
         // GET: Movies
         public async Task<IActionResult> Index(string movieGenre, string searchString)
         {
-            
-            var movies = from m in _context.Movie
+
+            var movies = from m in _context.Movies
                         select m;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -43,7 +43,7 @@ namespace IMDB.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {

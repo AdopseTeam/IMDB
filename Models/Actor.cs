@@ -1,5 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MvcMovie.Models;
+using System.Collections.Generic;
+using MvcSeries.Models;
 
 namespace MvcActor.Models
 {
@@ -14,5 +17,7 @@ namespace MvcActor.Models
 
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
+        public List<Movies> Movies {get; set;}
+        public List<Series> Series { get; set; }
     }
 }

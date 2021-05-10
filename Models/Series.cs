@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using IMDB.Models;
 
 namespace MvcSeries.Models
 {
@@ -15,5 +16,10 @@ namespace MvcSeries.Models
         public int Seasons { get; set; }
         public string Genre { get; set; }
         public decimal Rating { get; set; }
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
+        public List<Watchlist> Watchlist { get; set; }
+        public List<MvcComments.Models.Comments> Comments { get; set; }
+        public List<MvcActor.Models.Actor> Actor {get; set;}
     }
 }
