@@ -22,17 +22,17 @@ namespace IMDB.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>()
-                .HasMany(m => m.MoviesList)
+                .HasMany(m => m.Movies)
                 .WithOne(u => u.User)
                 .IsRequired();
 
             builder.Entity<MvcMovie.Models.Movies>()
-                .HasMany(w => w.Watchlists)
-                .WithOne(m => m.Movie)
+                .HasMany(w => w.Watchlist)
+                .WithOne(m => m.Movies)
                 .IsRequired();
 
             builder.Entity<ApplicationUser>()
-                .HasMany(w => w.Watchlists)
+                .HasMany(w => w.Watchlist)
                 .WithOne(u => u.User)
                 .IsRequired();
 

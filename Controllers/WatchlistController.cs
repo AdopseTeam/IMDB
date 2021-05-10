@@ -1,13 +1,8 @@
-﻿using IMDB.Data;
-using IMDB.Models;
+﻿using IMDB.Models;
 using IMDB.Repo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IMDB.Controllers
 {
@@ -17,7 +12,7 @@ namespace IMDB.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private IWatchlistRepo _watchlistRepo;
-        
+
         public WatchlistController(IWatchlistRepo watchlistRepo,UserManager<ApplicationUser> userManager)
         {
             _watchlistRepo = watchlistRepo;
@@ -31,13 +26,28 @@ namespace IMDB.Controllers
             return View(watchlists);
         }
 
-        public IActionResult New(int CurrentMovieId)
+        public IActionResult NewMovie(int CurrentMovieId)
         {
             var CurrentUserId = _userManager.GetUserId(HttpContext.User);
             _watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
             var watchlist = new Watchlist
             {
                 movieId = CurrentMovieId,
+                UserId= CurrentUserId
+            };
+
+            _watchlistRepo.Create(watchlist);
+
+
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult NewSeries(int CurrentSeriesId)
+        {
+            var CurrentUserId = _userManager.GetUserId(HttpContext.User);
+            _watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
+            var watchlist = new Watchlist
+            {
+                movieId = CurrentSeriesId,
                 UserId= CurrentUserId
             };
 

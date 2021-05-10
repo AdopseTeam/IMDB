@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IMDB.Models
 {
@@ -10,9 +7,11 @@ namespace IMDB.Models
         public int Id { get; set; }
         public int movieId { get; set; }
         public string UserId { get; set; }
-        public MvcMovie.Models.Movies Movie { get; set; }
+        public MvcMovie.Models.Movies Movies { get; set; }
         public ApplicationUser User {get;set;}
+        public int seriesId {get; set;}
+        public MvcSeries.Models.Series Series {get; set;}
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-    
+
     }
 }
