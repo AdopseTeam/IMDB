@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcMovie.Models{
-    public class Movie{
+    public class Movies{
         public int Id { get; set; }
         public string Title { get; set; }
         public string Overview { get; set; }

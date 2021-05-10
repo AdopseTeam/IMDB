@@ -17,6 +17,7 @@ namespace IMDB.Areas.Identity
         private string GetHerokuConnectionString()
         {
             string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
             string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);

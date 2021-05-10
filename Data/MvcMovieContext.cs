@@ -33,8 +33,8 @@ namespace MvcMovie.Data
                 foreach(var genreObj in genrejObject){
                     if((string)genreObj["id"] == genre_id){
                         var genre = (string)genreObj["name"];
-                        modelBuilder.Entity<Movie>().HasData(
-                            new Movie{
+                        modelBuilder.Entity<Movies>().HasData(
+                            new Movies{
                                 Id = counter,
                                 Title = (string)item["original_title"],
                                 ReleaseDate = DateTime.Parse((string)item["release_date"]??"10/10/2010"),
@@ -50,7 +50,7 @@ namespace MvcMovie.Data
             }
         }
 
-        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Movies> Movie { get; set; }
         public DbSet<Watchlist> Watchlists { get; set; }
 
     }
