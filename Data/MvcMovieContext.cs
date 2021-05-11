@@ -1,7 +1,6 @@
 using IMDB.Models;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
-using MvcComments.Models;
 using Newtonsoft.Json.Linq;
 using System;
 
@@ -17,7 +16,6 @@ namespace MvcMovie.Data
 
         public DbSet<Movies> Movies { get; set; }
         public DbSet<Watchlist> Watchlist { get; set; }
-        public DbSet<Comments> Comments {get; set;}
 
     }
 }

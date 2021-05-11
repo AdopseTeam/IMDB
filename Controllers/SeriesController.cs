@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcSeries.Data;
+using System.Dynamic;
 
 namespace IMDB.Controllers
 {
@@ -13,7 +14,6 @@ namespace IMDB.Controllers
         {
             _context = context;
         }
-
         // GET: Series
         public async Task<IActionResult> Index()
         {
@@ -27,15 +27,15 @@ namespace IMDB.Controllers
             {
                 return NotFound();
             }
-
-            var series = await _context.Series
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (series == null)
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Comments = await _context.Comments.FirstOrDefaultAsync(m => m.Id == id);
+            mymodel.Series = await _context.Series.FirstOrDefaultAsync(m => m.Id == id);
+            if (mymodel.Series == null)
             {
                 return NotFound();
             }
 
-            return View(series);
+            return View(mymodel);
         }
     }
 }
