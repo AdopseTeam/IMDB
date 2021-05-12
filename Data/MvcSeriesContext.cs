@@ -66,5 +66,6 @@ namespace MvcSeries.Data
         }
         public DbSet<Series> Series { get; set; }
         public DbSet<SeriesComment> SComments {get; set;}
+
     }
 }

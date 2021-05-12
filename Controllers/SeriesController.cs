@@ -6,6 +6,7 @@ using MvcSeries.Models;
 using System.Dynamic;
 using System.Linq;
 
+
 namespace IMDB.Controllers
 {
     public class SeriesController : Controller
@@ -32,6 +33,7 @@ namespace IMDB.Controllers
             }
             dynamic mymodel = new ExpandoObject();
             mymodel.SComments = await _context.SComments.Where(s => s.SId == id).ToListAsync();
+
             mymodel.Series = await _context.Series.FirstOrDefaultAsync(m => m.Id == id);
             if (mymodel.Series == null)
             {
@@ -39,6 +41,7 @@ namespace IMDB.Controllers
             }
 
             return View(mymodel);
+
         }
 
         public LocalRedirectResult NewComment(int id, string text)
@@ -53,6 +56,7 @@ namespace IMDB.Controllers
             _context.SComments.Add(comment);
             _context.SaveChanges();
             return LocalRedirect("/Series/Details/"+id);
+
         }
     }
 }
