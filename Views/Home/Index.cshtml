@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcMovie.Models.Movie>
+﻿@model IEnumerable<MvcMovie.Models.Movies>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -27,7 +27,7 @@
 </ul>	
 <div class="carousel-inner">
 	<div class="carousel-item active">
-		<img src="img/movie1.png">
+		<img src="~/img/movie1.png">
 		<div class="carousel-caption">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div class="carousel-item">
-		<img src="img/movie2.png">
+		<img src="~/img/movie2.png">
 		<div class="carousel-caption">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<div class="carousel-item">
-		<img src="img/movie3.png">
+		<img src="~/img/movie3.png">
 		<div class="carousel-caption">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
@@ -56,59 +56,28 @@
 
 <br>
 <div class="col-12">
-	<p class="lead">Released On This Day</p>
+	<h3>Released On This Day<h3>
 </div>
 <div class="container-fluid padding">
-<div class="row row-cols-2 row-cols-md-6">
-    <div class="col mb-4">
-        <div class="card bg-dark">
-            <img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title font-weight-bold">Card Title</h5>
-                <div>
-                    <p class="card-text">Something to check text</p>
-                </div> <br>
-            </div>
-        </div>
-    </div>
 
-    <div class="col mb-4">
-        <div class="card" style="border-width: thin; background-color: #000000;">
-            <img src="https://m.media-amazon.com/images/M/MV5BMTYzNDYxNzY2MF5BMl5BanBnXkFtZTYwNzk2NTc3._V1_.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title font-weight-bold">Card Title</h5>
-                <div>
-                    <p class="card-text">Something to check text</p>
-                </div> <br>
+    <div class="row bg-dark px-3 pt-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
+        @foreach (var item in Model) {
+        <div class="col mb-4">
+            <div class="card-dsp">
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                    <p><img src="~/img/yellow_star.svg" style="vertical-align: sub;"> @Html.DisplayFor(modelItem => item.Rating)</p>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.Title)</h6></a>
+                    <div>
+                        <p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Genre)</p>
+                    </div> <br>
+                    <a class ="btn btn-dark btn-block" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">Watchlist</a>
+                </div>
             </div>
         </div>
+        }
     </div>
-	
-	<div class="col mb-4">
-        <div class="card" style="border-width: 0; border-radius:0; background-color: #0d0c0c;">
-            <img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title font-weight-bold">Card Title</h5>
-                <div>
-                    <p class="card-text">Something to check text</p>
-                </div> <br>
-            </div>
-        </div>
-    </div>
-
-    <div class="col mb-4">
-        <div class="card" style="border-width: 0; background-color: #0d0c0c;">
-            <img src="https://m.media-amazon.com/images/M/MV5BMTYzNDYxNzY2MF5BMl5BanBnXkFtZTYwNzk2NTc3._V1_.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title font-weight-bold">Card Title</h5>
-                <div>
-                    <p class="card-text">Something to check text</p>
-                </div> <br>
-            </div>
-        </div>
-    </div>
-</div>
-
+    
     
 </div>
 
