@@ -50,6 +50,7 @@ namespace MvcSeries.Data
                         modelBuilder.Entity<SeriesComment>().HasData(
                             new SeriesComment {
                                 Id = counter,
+                                SId = counter,
                                 Creator = "Anonymous",
                                 Text = "This is a sample text for " + (string)item["original_name"]
                             }
@@ -59,17 +60,12 @@ namespace MvcSeries.Data
                 }
             }
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Series>()
-                .HasMany(c => c.Comments)
-                .WithOne(s => s.Series)
-                .OnDelete(DeleteBehavior.Cascade);
-            this.seedSeries(builder);
-
+            seedSeries(builder);
         }
         public DbSet<Series> Series { get; set; }
-        public DbSet<SeriesComment> Comments {get; set;}
+        public DbSet<SeriesComment> SComments {get; set;}
+
     }
 }

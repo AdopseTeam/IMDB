@@ -17,6 +17,5 @@ namespace MvcActor.Models
 
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
-        public List<Movies> Movies {get; set;}
     }
 }
