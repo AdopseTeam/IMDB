@@ -1,4 +1,4 @@
-@model MvcSeries.Models.Series
+@model dynamic
 @inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
 
@@ -13,46 +13,58 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            Title
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+           @Model.Series.Title
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            Release Date
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Model.Series.ReleaseDate
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Seasons)
+            Seasons
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Seasons)
+            @Model.Series.Seasons
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
+            Genre
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
+            @Model.Series.Genre
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
+           Rating
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
+            @Model.Series.Rating
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Overview)
+            Overview
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Overview)
+            @Model.Series.Overview
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Poster_path)
+            Comment creator
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Poster_path)
+            @Model.Comments.Creator
+        </dd>
+        <dt class="col-sm-2">
+            Comment Date
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Comments.PubDate
+        </dd>
+        <dt class="col-sm-2">
+            Comment Text
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Comments.Text
         </dd>
          <dt class="col-sm-2">
             @if(SignInManager.IsSignedIn(User))

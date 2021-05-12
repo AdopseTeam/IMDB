@@ -9,8 +9,6 @@ namespace IMDB.Models
         public string UserId { get; set; }
         public MvcMovie.Models.Movies Movies { get; set; }
         public ApplicationUser User {get;set;}
-        public int seriesId {get; set;}
-        public MvcSeries.Models.Series Series {get; set;}
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     }
