@@ -48,24 +48,27 @@
         <dd class="col-sm-10">
             @Model.Series.Overview
         </dd>
-        <dt class="col-sm-2">
+        @foreach (var comment in Model.SComments)
+        {
+            <dt class="col-sm-2">
             Comment creator
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Comments.Creator
-        </dd>
-        <dt class="col-sm-2">
-            Comment Date
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Comments.PubDate
-        </dd>
-        <dt class="col-sm-2">
-            Comment Text
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Comments.Text
-        </dd>
+            </dt>
+            <dd class="col-sm-10">
+                @comment.Creator
+            </dd>
+            <dt class="col-sm-2">
+                Comment Date
+            </dt>
+            <dd class="col-sm-10">
+                @comment.PubDate
+            </dd>
+            <dt class="col-sm-2">
+                Comment Text
+            </dt>
+            <dd class="col-sm-10">
+                @comment.Text
+            </dd>
+        }
          <dt class="col-sm-2">
             @if(SignInManager.IsSignedIn(User))
             {
@@ -79,6 +82,10 @@
             </div>
             }
         </dt>
+        <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
+            <label for="text">Text</label>
+            <input type="text" name="text">
+        </form>
     </dl>
     <div>
     <a asp-action="Index">Back to List</a>
