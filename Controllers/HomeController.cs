@@ -17,36 +17,53 @@ namespace IMDB.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly MvcMovieContext _context;
-        public static DateTime Today { get; }
+        private readonly MvcMovieContext _released;
+        public static DateTime today;
+        public static int day, month;
         
-        public HomeController(ILogger<HomeController> logger, MvcMovieContext context)
+        public HomeController(ILogger<HomeController> logger, MvcMovieContext released)
         {
             _logger = logger;
-            _context = context;
+            _released = released;
         }
+        
+        public async Task<IActionResult> Index()
+        {
 
+                month = DateTime.Today.Month;
+                today = DateTime.Today.Date;
+                
+                var movies = from m in _released.Movies
+                    select m;
+                
+                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<=0).Where(s => s.ReleaseDate.Month.Equals(month));
+                
+            return View(await movies.Take(6).ToListAsync());
+        }
+        
+        /*
         public IActionResult Index()
         {
             return View();
         }
-        
+        */
         public IActionResult Privacy()
         {
             return View();
         }
 
-        public async Task<IActionResult> ReleasedOnThisDay(string searchString)
+        public async Task<IActionResult> ReleasedOnThisDay()
         {
-
-                var movies = from m in _context.Movie
+                //day = DateTime.Today.Day;
+                month = DateTime.Today.Month;
+                today = DateTime.Today.Date;
+                
+                var movies = from m in _released.Movies
                         select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                string lowerMovie = searchString.ToLower();
-                movies = movies.Where(s => s.Title.ToLower().Contains(lowerMovie));
-            }
+                
+                //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month));
+                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<=0).Where(s => s.ReleaseDate.Month.Equals(month));
+                //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month)).Where(s => s.ReleaseDate.Day.Equals(day));
 
             return View(await movies.ToListAsync());
         }

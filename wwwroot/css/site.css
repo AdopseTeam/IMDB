@@ -100,7 +100,26 @@ a:hover {
 }
 .pt-6,
 .py-6 {
-  padding-top: 4rem !important;
+  padding-top: 4rem !important; 
+}
+
+.pb-6,
+.py-6 {
+  padding-bottom: 4rem !important;
+}
+
+.card-dsp {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  border:0;
+  background-color: #0d0c0c;
 }
 
 .input-container form,
