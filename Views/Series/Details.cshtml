@@ -71,23 +71,14 @@
                 @comment.Text
             </dd>
         }
-         @*<dt class="col-sm-2">
-            @if(SignInManager.IsSignedIn(User))
-            {
-            <div class="row">
-                <a class="btn btn-dark"
-                    asp-action="NewSeries"
-                    asp-controller="Watchlist"
-                    asp-route-CurrentSeriesId="@Model.Id">
-                        Add to Watchlist
-                </a>
-            </div>
+        <dt class="col-sm-2">
+            @if(SignInManager.IsSignedIn(User)){
+                <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
+                <label for="text">Your comment: </label>
+                <input type="text" name="text">
+                </form>
             }
-        </dt>*@
-        <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
-            <label for="text">Text</label>
-            <input type="text" name="text">
-        </form>
+        </dt>
     </dl>
     <div>
     <a asp-action="Index">Back to List</a>

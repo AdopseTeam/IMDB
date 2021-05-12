@@ -7,17 +7,23 @@ using System.Dynamic;
 using System.Linq;
 using IMDB.Views;
 using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IMDB.Controllers
 {
+    [Authorize]
     public class SeriesController : Controller
     {
         private const string ControllerName = "Series";
         private readonly MvcSeriesContext _context;
+        private UserManager<IdentityUser> _userManager;
 
-        public SeriesController(MvcSeriesContext context)
+
+        public SeriesController(MvcSeriesContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         // GET: Series
         public async Task<IActionResult> Index(string searchString,int? pageNumber)
@@ -62,11 +68,12 @@ namespace IMDB.Controllers
 
         public LocalRedirectResult NewComment(int id, string text)
         {
+            var user = _userManager.GetUserName(HttpContext.User);
             var comment = new SeriesComment
             {
                 Id =  _context.SComments.Max(s => s.Id) + 1,
                 SId = (int)id,
-                Creator = "Anonymous",
+                Creator = user,
                 Text = text
             };
             _context.SComments.Add(comment);
