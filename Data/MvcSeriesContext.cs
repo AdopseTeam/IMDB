@@ -14,14 +14,14 @@ namespace MvcSeries.Data
         }
         public void seedSeries(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/tv/list";
-            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray seriesObject = new JArray();
             for(int i=1; i<20; i++){
                 const string URL = "https://api.themoviedb.org/3/tv/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 seriesObject.Merge((JArray)seriesReponse["results"]);
             }

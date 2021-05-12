@@ -1,4 +1,5 @@
 using IMDB.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,7 @@ namespace MvcMovie.Models{
         public decimal Rating { get; set; }
         public decimal Budget { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public IdentityUser User { get; set; }
         public string UserId { get; set; }
         public List<Watchlist> Watchlist { get; set; }
         public List<MvcActor.Models.Actor> Actor {get; set;}

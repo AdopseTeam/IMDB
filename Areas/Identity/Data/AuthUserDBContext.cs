@@ -7,10 +7,11 @@ using MvcSeries.Models;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace IMDB.Data
 {
-    public class AuthUserDBContext : IdentityDbContext<ApplicationUser>
+    public class AuthUserDBContext : IdentityDbContext<IdentityUser>
     {
 
         public AuthUserDBContext(DbContextOptions<AuthUserDBContext> options)
@@ -19,14 +20,14 @@ namespace IMDB.Data
         }
         public void seedMovies(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
-            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
             for(int i=1; i<10; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 movieObject.Merge((JArray)movieReponse["results"]);
             }
@@ -55,14 +56,14 @@ namespace IMDB.Data
         }
         public void seedSeries(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/tv/list";
-            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray seriesObject = new JArray();
             for(int i=1; i<20; i++){
                 const string URL = "https://api.themoviedb.org/3/tv/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 seriesObject.Merge((JArray)seriesReponse["results"]);
             }
@@ -96,10 +97,10 @@ namespace IMDB.Data
         public void seedActors(ModelBuilder modelBuilder){
             JArray actorsObject = new JArray();
 
-            string detailsUrlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string detailsUrlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             for (int i = 1; i < 20; i++) {
                 const string URL = "https://api.themoviedb.org/3/person/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 actorsObject.Merge((JArray)seriesReponse["results"]);
             }
@@ -125,25 +126,11 @@ namespace IMDB.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.Entity<ApplicationUser>()
-                .HasMany(m => m.Movies)
-                .WithOne(u => u.User);
-                // .IsRequired();
-
-            builder.Entity<MvcMovie.Models.Movies>()
-                .HasMany(w => w.Watchlist)
-                .WithOne(m => m.Movies);
-                // .IsRequired();
-
-            builder.Entity<ApplicationUser>()
-                .HasMany(w => w.Watchlist)
-                .WithOne(u => u.User);
-                // .IsRequired();
-
-            base.OnModelCreating(builder);
-
             this.seedActors(builder);
             this.seedMovies(builder);
+            base.OnModelCreating(builder);
+
+            
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
