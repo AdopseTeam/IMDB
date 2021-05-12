@@ -17,7 +17,6 @@ namespace IMDB.Areas.Identity
         private string GetHerokuConnectionString()
         {
             string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
             var databaseUri = new Uri(connectionUrl);
             string db = databaseUri.LocalPath.TrimStart('/');
             string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
@@ -29,7 +28,7 @@ namespace IMDB.Areas.Identity
                 services.AddDbContext<AuthUserDBContext>(options =>
                     options.UseNpgsql(GetHerokuConnectionString()));
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<AuthUserDBContext>();
 
             });

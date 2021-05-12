@@ -5,7 +5,8 @@ using MvcSeries.Data;
 using MvcSeries.Models;
 using System.Dynamic;
 using System.Linq;
-
+using IMDB.Views;
+using System;
 
 namespace IMDB.Controllers
 {
@@ -19,9 +20,24 @@ namespace IMDB.Controllers
             _context = context;
         }
         // GET: Series
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString,int? pageNumber)
         {
-            return View(await _context.Series.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+
+            var series = from s in _context.Series
+                         select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                string lowerSeries = searchString.ToLower();
+                series = series.Where(s => s.Title.ToLower().Contains(lowerSeries));
+            }
+
+            int pageSize = 16;
+            return View(await PaginatedList<Series>.CreateAsync(series.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Series/Details/5

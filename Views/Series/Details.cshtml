@@ -1,6 +1,8 @@
 @model dynamic
-@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
-@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
@@ -69,7 +71,7 @@
                 @comment.Text
             </dd>
         }
-         <dt class="col-sm-2">
+         @*<dt class="col-sm-2">
             @if(SignInManager.IsSignedIn(User))
             {
             <div class="row">
@@ -81,7 +83,7 @@
                 </a>
             </div>
             }
-        </dt>
+        </dt>*@
         <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
             <label for="text">Text</label>
             <input type="text" name="text">

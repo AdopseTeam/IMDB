@@ -10,10 +10,10 @@ namespace IMDB.Controllers
 
     public class WatchlistController : Controller
     {
-        private UserManager<ApplicationUser> _userManager;
+        private UserManager<IdentityUser> _userManager;
         private IWatchlistRepo _watchlistRepo;
 
-        public WatchlistController(IWatchlistRepo watchlistRepo,UserManager<ApplicationUser> userManager)
+        public WatchlistController(IWatchlistRepo watchlistRepo,UserManager<IdentityUser> userManager)
         {
             _watchlistRepo = watchlistRepo;
             _userManager = userManager;
@@ -29,10 +29,10 @@ namespace IMDB.Controllers
         public IActionResult NewMovie(int CurrentMovieId)
         {
             var CurrentUserId = _userManager.GetUserId(HttpContext.User);
-            _watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
+            //_watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
             var watchlist = new Watchlist
             {
-                movieId = CurrentMovieId,
+                MoviesId = CurrentMovieId,
                 UserId= CurrentUserId
             };
 
@@ -44,10 +44,10 @@ namespace IMDB.Controllers
         public IActionResult NewSeries(int CurrentSeriesId)
         {
             var CurrentUserId = _userManager.GetUserId(HttpContext.User);
-            _watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
+            //_watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
             var watchlist = new Watchlist
             {
-                movieId = CurrentSeriesId,
+                MoviesId = CurrentSeriesId,
                 UserId= CurrentUserId
             };
 

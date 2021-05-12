@@ -1,4 +1,4 @@
-@model IEnumerable<MvcSeries.Models.Series>
+@model IMDB.Views.PaginatedList<MvcSeries.Models.Series>
 
 @{
     ViewData["Title"] = "Series";
@@ -10,7 +10,7 @@
         <div class="col">
             <form asp-controller="Series" asp-action="Index" style="display: inline-block;">
                 <input id="title" type="text" name="SearchString" placeholder="Search by Title" />
-                <input class="btn btn-dark" type="submit" value="Search"/>
+                <input class="btn btn-dark" type="submit" value="Search" />
             </form>
         </div>
     </div>
@@ -19,23 +19,40 @@
 
 <div class="container2">
     <div class="row">
-            @foreach (var item in Model) {
-                <div class="col mb-4">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
-                <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
-                    <div>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Seasons):</strong> @Html.DisplayFor(modelItem => item.Seasons)</p>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Rating):</strong> @Html.DisplayFor(modelItem => item.Rating)</p>
-                    </div> <br>
-                    <a class ="btn btn-warning" asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                    <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <div>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Seasons):</strong> @Html.DisplayFor(modelItem => item.Seasons)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Rating):</strong> @Html.DisplayFor(modelItem => item.Rating)</p>
+                        </div> <br>
+                        <a class="btn btn-warning" asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                    </div>
                 </div>
-                </div>
-                </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div>
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn btn-outline-warning @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-outline-warning @nextDisabled">
+        Next
+    </a>
 </div>

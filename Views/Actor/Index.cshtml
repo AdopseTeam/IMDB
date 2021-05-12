@@ -1,4 +1,4 @@
-@model IEnumerable<MvcActor.Models.Actor>
+@model IMDB.Views.PaginatedList<MvcActor.Models.Actor>
 
 @{
     ViewData["Title"] = "Actors";
@@ -10,7 +10,7 @@
         <div class="col">
             <form asp-controller="Actor" asp-action="Index" style="display: inline-block;">
                 <input id="title" type="text" name="SearchString" placeholder="Search by Name" />
-                <input class="btn btn-dark" type="submit" value="Search"/>
+                <input class="btn btn-dark" type="submit" value="Search" />
             </form>
         </div>
     </div>
@@ -19,21 +19,38 @@
 
 <div class="container2">
     <div class="row">
-            @foreach (var item in Model) {
-                <div class="col mb-4">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
-                <img src="~/img/profilpic.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <div>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.FirstName):</strong> @Html.DisplayFor(modelItem => item.FirstName)</p>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.LastName):</strong> @Html.DisplayFor(modelItem => item.LastName)</p>
-                        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.Birthday):</strong> @Html.DisplayFor(modelItem => item.Birthday)</p>
-                    </div> <br>
-                    <a class ="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                    <img src="~/img/profilpic.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FirstName):</strong> @Html.DisplayFor(modelItem => item.FirstName)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.LastName):</strong> @Html.DisplayFor(modelItem => item.LastName)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Birthday):</strong> @Html.DisplayFor(modelItem => item.Birthday)</p>
+                        </div> <br>
+                        <a class="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                    </div>
                 </div>
-                </div>
-                </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div>
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn btn-outline-warning @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-outline-warning @nextDisabled">
+        Next
+    </a>
 </div>

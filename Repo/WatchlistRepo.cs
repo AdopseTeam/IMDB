@@ -47,20 +47,5 @@ namespace IMDB.Repo
         }
 
 
-        public void AddUserIdToAppUserTable(string CurrentUserId)
-        {
-            var flag = _context.Set<ApplicationUser>().Where(u => u.Id == CurrentUserId).FirstOrDefault();
-            if (flag == null) {
-            var AppUser = new ApplicationUser
-            {
-            Id = CurrentUserId
-            };
-            _context.Add(AppUser);
-            _context.SaveChanges();
-            }
-        }
-
-
-
     }
 }

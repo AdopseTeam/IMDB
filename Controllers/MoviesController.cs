@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IMDB.Views;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,12 @@ namespace IMDB.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        public async Task<IActionResult> Index(string movieGenre, string searchString,int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
 
             var movies = from m in _context.Movies
                         select m;
@@ -32,7 +37,8 @@ namespace IMDB.Controllers
                 movies = movies.Where(s => s.Title.ToLower().Contains(lowerMovie));
             }
 
-            return View(await movies.ToListAsync());
+            int pageSize = 16;
+            return View(await PaginatedList<Movies>.CreateAsync(movies.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Movies/Details/5

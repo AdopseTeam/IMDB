@@ -1,7 +1,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using MvcActor.Data;
+using IMDB.Views;
+using MvcActor.Models;
+using System;
 
 namespace IMDB.Controllers
 {
@@ -15,9 +19,17 @@ namespace IMDB.Controllers
         }
 
         // GET: Actor
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            return View(await _context.Actor.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            var actors = from a in _context.Actor
+                         select a;
+
+            int pageSize = 16;
+            return View(await PaginatedList<Actor>.CreateAsync(actors.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Actor/Details/5
