@@ -12,6 +12,6 @@ namespace IMDB.Repo
         void Create(Watchlist watchlist);
         List<Watchlist> GetUserWatchlist(string userId);
         void Remove(Watchlist watchlist);
-        //void AddUserIdToAppUserTable(string userId);
+        void AddUserIdToAppUserTable(string userId);
     }
 }
