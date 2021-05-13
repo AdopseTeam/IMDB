@@ -1,5 +1,5 @@
-@model MvcMovie.Models.Movies
-@using Microsoft.AspNetCore.Identity;
+@model dynamic
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
@@ -13,47 +13,62 @@
     <h4>Movie</h4>
     <hr />
     @{
-        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Poster_path;
+        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Movie.Poster_path;
 
     }
     <img src="@ImgPath" />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            Title
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Model.Movie.Title
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            Release Date
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Model.Movie.ReleaseDate
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
+            Genre
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
+            @Model.Movie.Genre
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
+            Rating
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
+            @Model.Movie.Rating
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Overview)
+            Overview
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Overview)
+            @Model.Movie.Overview
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Poster_path)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Poster_path)
-        </dd>
+        @foreach (var comment in Model.MComments)
+        {
+            <dd class="col-sm-2">
+            Comment creator
+            </dd>
+            <dt class="col-sm-10">
+                @comment.Creator
+            </dt>
+            <dd class="col-sm-2">
+                Comment Date
+            </dd>
+            <dt class="col-sm-10">
+                @comment.PubDate
+            </dt>
+            <dd class="col-sm-2">
+                Comment Text
+            </dd>
+            <dt class="col-sm-10">
+                @comment.Text
+            </dt>
+        }
         <dt class="col-sm-2">
             @if (SignInManager.IsSignedIn(User))
             {
@@ -61,10 +76,14 @@
                     <a class="btn btn-dark"
                        asp-action="NewMovie"
                        asp-controller="Watchlist"
-                       asp-route-CurrentMovieId="@Model.Id">
+                       asp-route-CurrentMovieId="@Model.Movie.Id">
                         Add to Watchlist
                     </a>
                 </div>
+                <form asp-action="NewMComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+                <label for="text">Your comment: </label>
+                <input type="text" name="text">
+                </form>
             }
         </dt>
     </dl>

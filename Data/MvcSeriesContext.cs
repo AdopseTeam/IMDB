@@ -14,14 +14,14 @@ namespace MvcSeries.Data
         }
         public void seedSeries(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/tv/list";
-            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray seriesObject = new JArray();
             for(int i=1; i<50; i++){
                 const string URL = "https://api.themoviedb.org/3/tv/popular";
-                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
+                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 seriesObject.Merge((JArray)seriesReponse["results"]);
             }
@@ -38,7 +38,7 @@ namespace MvcSeries.Data
                         }
                         string sId = (string)item["id"];
                         string SURL = $"https://api.themoviedb.org/3/tv/{sId}";
-                        string SurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&append_to_response=credits";
+                        string SurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&append_to_response=credits";
                         var seriesResponse = HTTP.Response.returnResponse(SURL, SurlParameters);
                         JArray seriesjObject = (JArray)seriesResponse["credits"]["cast"];
                         var cast = "";
@@ -75,8 +75,8 @@ namespace MvcSeries.Data
         {
             seedSeries(builder);
         }
-        public DbSet<Series> Series { get; set; }
         public DbSet<SeriesComment> SComments {get; set;}
 
+        public DbSet<Series> Series { get; set; }
     }
 }
