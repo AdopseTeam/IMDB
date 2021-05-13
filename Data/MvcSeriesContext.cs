@@ -75,8 +75,8 @@ namespace MvcSeries.Data
         {
             seedSeries(builder);
         }
-        public DbSet<Series> Series { get; set; }
         public DbSet<SeriesComment> SComments {get; set;}
 
+        public DbSet<Series> Series { get; set; }
     }
 }

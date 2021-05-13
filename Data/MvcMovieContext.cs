@@ -46,8 +46,16 @@ namespace MvcMovie.Data
                                 Rating = (decimal)item["vote_average"],
                                 Poster_path= (string)item["poster_path"],
                                 Overview=(string)item["overview"]
-                        }
-                );
+                            }
+                        );
+                         modelBuilder.Entity<MovieComment>().HasData(
+                            new MovieComment {
+                                Id = counter,
+                                MId = counter,
+                                Creator = "Developers",
+                                Text = "This is a sample text for " + (string)item["original_name"]
+                            }
+                        );
                     }
                     counter += 1;
                 }
@@ -57,8 +65,9 @@ namespace MvcMovie.Data
         {
             seedMovies(builder);
         }
-        public DbSet<Movies> Movies { get; set; }
         public DbSet<Watchlist> Watchlist { get; set; }
+        public DbSet<MovieComment> MComments { get; set; }
+        public DbSet<Movies> Movies { get; set; }
 
     }
 }

@@ -21,4 +21,16 @@ namespace MvcMovie.Models{
         public string UserId { get; set; }
         public List<Watchlist> Watchlist { get; set; }
     }
+
+     public class MovieComment
+    {
+        public int Id { get; set; }
+
+        public int MId { get; set; }
+        public string Creator { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime PubDate { get; set; } = DateTime.Now;
+        public string Text { get; set; }
+    }
 }

@@ -1,23 +1,28 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IMDB.Views;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
+using System.Dynamic;
+using Microsoft.AspNetCore.Identity;
 
 namespace IMDB.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly MvcMovieContext _context;
+        private const string ControllerName = "Movies";
 
-        public MoviesController(MvcMovieContext context)
+        private readonly MvcMovieContext _context;
+        private UserManager<IdentityUser> _userManager;
+
+
+        public MoviesController(MvcMovieContext context,UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Movies
@@ -48,15 +53,29 @@ namespace IMDB.Controllers
             {
                 return NotFound();
             }
-
-            var movie = await _context.Movies
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Movie =  await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
+            mymodel.MComments = await _context.MComments.Where(s => s.MId == id).ToListAsync();
+            if (mymodel.Movie == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(mymodel);
+        }
+        public LocalRedirectResult NewMComment(int Movieid, string text)
+        {
+            var user = _userManager.GetUserName(HttpContext.User);
+            var comment = new MovieComment
+            {
+                Id =  _context.MComments.Max(s => s.Id) + 1,
+                MId = (int)Movieid,
+                Creator = user,
+                Text = text
+            };
+            _context.MComments.Add(comment);
+            _context.SaveChanges();
+            return LocalRedirect("/Movies/Details/" + Movieid);
         }
 
     }
