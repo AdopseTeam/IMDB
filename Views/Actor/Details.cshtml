@@ -9,6 +9,11 @@
 <div class="container">
     <h4>Actor</h4>
     <hr />
+    @{
+        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Profile_pic_path;
+
+    }
+    <img src="@ImgPath" />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FirstName)
@@ -42,7 +47,7 @@
         </dd>
     </dl>
     <div>
-    <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 

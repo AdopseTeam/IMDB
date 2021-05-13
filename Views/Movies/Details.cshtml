@@ -12,6 +12,11 @@
 <div class="container">
     <h4>Movie</h4>
     <hr />
+    @{
+        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Poster_path;
+
+    }
+    <img src="@ImgPath" />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -50,16 +55,16 @@
             @Html.DisplayFor(model => model.Poster_path)
         </dd>
         <dt class="col-sm-2">
-            @if(SignInManager.IsSignedIn(User))
+            @if (SignInManager.IsSignedIn(User))
             {
-            <div class="row">
-                <a class="btn btn-dark"
-                    asp-action="NewMovie"
-                    asp-controller="Watchlist"
-                    asp-route-CurrentMovieId="@Model.Id">
+                <div class="row">
+                    <a class="btn btn-dark"
+                       asp-action="NewMovie"
+                       asp-controller="Watchlist"
+                       asp-route-CurrentMovieId="@Model.Id">
                         Add to Watchlist
-                </a>
-            </div>
+                    </a>
+                </div>
             }
         </dt>
     </dl>

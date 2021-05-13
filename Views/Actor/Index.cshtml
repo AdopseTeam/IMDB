@@ -23,7 +23,10 @@
         {
             <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
-                    <img src="~/img/profilpic.png" class="card-img-top" alt="...">
+                    @{
+                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Profile_pic_path;
+                    }
+                    <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
                         <div>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FirstName):</strong> @Html.DisplayFor(modelItem => item.FirstName)</p>

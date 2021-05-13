@@ -21,9 +21,13 @@
     <div class="row">
         @foreach (var item in Model)
         {
+
             <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
-                    <img src="https://image.freepik.com/free-vector/click-movie-logo-vector_18099-258.jpg" class="card-img-top" alt="...">
+                    @{
+                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                    }
+                    <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
                         <div>
