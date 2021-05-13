@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
 using System.Dynamic;
+using MvcActor.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace IMDB.Controllers
 {
@@ -17,12 +19,15 @@ namespace IMDB.Controllers
 
         private readonly MvcMovieContext _context;
         private UserManager<IdentityUser> _userManager;
+        private readonly MvcActorContext _actorContext;
 
 
-        public MoviesController(MvcMovieContext context,UserManager<IdentityUser> userManager)
+
+        public MoviesController(MvcMovieContext context,UserManager<IdentityUser> userManager, MvcActorContext actorContext)
         {
             _context = context;
             _userManager = userManager;
+            _actorContext = actorContext;
         }
 
         // GET: Movies
@@ -53,9 +58,17 @@ namespace IMDB.Controllers
             {
                 return NotFound();
             }
+            var actorList = _context.Movies.FirstOrDefault(m => m.Id == id).Cast.Split(",").ToList();
+            actorList.RemoveAt(actorList.Count - 1);
+            var actors = actorList.Select(int.Parse).ToList();
             dynamic mymodel = new ExpandoObject();
             mymodel.Movie =  await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
             mymodel.MComments = await _context.MComments.Where(s => s.MId == id).ToListAsync();
+            var finalActors = new List<MvcActor.Models.Actor>();
+            foreach(int actorId in actors){
+                finalActors.Add(await _actorContext.Actor.FirstOrDefaultAsync(a => a.ActorId == actorId));
+            }
+            mymodel.Actor = finalActors;
             if (mymodel.Movie == null)
             {
                 return NotFound();

@@ -42,9 +42,11 @@ namespace MvcSeries.Data
                         var seriesResponse = HTTP.Response.returnResponse(SURL, SurlParameters);
                         JArray seriesjObject = (JArray)seriesResponse["credits"]["cast"];
                         var cast = "";
-                        foreach(var actor in seriesjObject){
-                            cast = cast + (string)actor["id"] + ",";
-                        }
+                        try{
+                            foreach(var actor in seriesjObject){
+                                cast = cast + (string)actor["id"] + ",";
+                            }
+                        } catch{}
                         modelBuilder.Entity<Series>().HasData(
                             new Series{
                                 Id = counter,

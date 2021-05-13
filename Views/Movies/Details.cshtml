@@ -48,6 +48,15 @@
         <dd class="col-sm-10">
             @Model.Movie.Overview
         </dd>
+        <dt>
+            @foreach (var actor in Model.Actor)
+                {
+                    @if (actor != null)
+                    {
+                        @actor.FirstName @actor.LastName
+                    }
+                }
+        </dt>
         @foreach (var comment in Model.MComments)
         {
             <dd class="col-sm-2">

@@ -37,6 +37,17 @@ namespace MvcMovie.Data
                         if(date == null || date == ""){
                             date = "10/10/2010";
                         }
+                        string MId = (string)item["id"];
+                        string MURL = $"https://api.themoviedb.org/3/movie/{MId}/credits";
+                        string MurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+                        var mResponse = HTTP.Response.returnResponse(MURL, MurlParameters);
+                        JArray mjObject = (JArray)mResponse["cast"];
+                        var cast = "";
+                        try{
+                            foreach(var actor in mjObject){
+                                cast = cast + (string)actor["id"] + ",";
+                            }
+                        } catch {}
                         modelBuilder.Entity<Movies>().HasData(
                             new Movies{
                                 Id = counter,
@@ -45,7 +56,8 @@ namespace MvcMovie.Data
                                 Genre = genre,
                                 Rating = (decimal)item["vote_average"],
                                 Poster_path= (string)item["poster_path"],
-                                Overview=(string)item["overview"]
+                                Overview=(string)item["overview"],
+                                Cast = cast
                             }
                         );
                          modelBuilder.Entity<MovieComment>().HasData(
