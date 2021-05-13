@@ -59,11 +59,11 @@ html, body{
   padding-left: 10%;
   padding-right: 10%;
 }
-/*---Card Design --*/
+/*---Card Design --
 .card-img-top{
   height: 250px;
   padding: 5px;
-}
+}*/
 
 .container{
   background: rgba(0, 0, 0, 0.10);
