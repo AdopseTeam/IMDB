@@ -38,7 +38,7 @@ namespace IMDB.Controllers
                 
                 movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<=0).Where(s => s.ReleaseDate.Month.Equals(month));
                 
-            return View(await movies.Take(6).ToListAsync());
+            return View(await movies.Take(12).ToListAsync());
         }
         
         /*

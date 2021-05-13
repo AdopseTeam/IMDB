@@ -16,7 +16,7 @@
         @foreach (var item in Model) {
         <div class="col mb-4">
             <div class="card-dsp">
-                <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-image-top" alt="..."></a>
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-img-top" alt="..."></a>
                 <div class="card-body">
                     <p><img src="~/img/yellow_star.svg" style="vertical-align: sub;"> @Html.DisplayFor(modelItem => item.Rating)</p>
                     <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.Title)</h6></a>
