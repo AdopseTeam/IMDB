@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace MvcSeries.Models
 {
@@ -14,6 +15,7 @@ namespace MvcSeries.Models
         public int Seasons { get; set; }
         public string Genre { get; set; }
         public decimal Rating { get; set; }
+        public string Cast {get; set;}
     }
 
     public class SeriesComment

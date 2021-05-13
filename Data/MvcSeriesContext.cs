@@ -19,7 +19,7 @@ namespace MvcSeries.Data
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray seriesObject = new JArray();
-            for(int i=1; i<20; i++){
+            for(int i=1; i<50; i++){
                 const string URL = "https://api.themoviedb.org/3/tv/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
@@ -36,22 +36,33 @@ namespace MvcSeries.Data
                         if(String.IsNullOrEmpty(release)){
                             release = "10/10/2010";
                         }
+                        string sId = (string)item["id"];
+                        string SURL = $"https://api.themoviedb.org/3/tv/{sId}";
+                        string SurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&append_to_response=credits";
+                        var seriesResponse = HTTP.Response.returnResponse(SURL, SurlParameters);
+                        JArray seriesjObject = (JArray)seriesResponse["credits"]["cast"];
+                        var cast = "";
+                        foreach(var actor in seriesjObject){
+                            cast = cast + (string)actor["id"] + ",";
+                        }
                         modelBuilder.Entity<Series>().HasData(
                             new Series{
                                 Id = counter,
                                 Title = (string)item["original_name"],
                                 ReleaseDate = DateTime.Parse(release),
                                 Genre = genre,
+                                Seasons = (int)seriesResponse["number_of_seasons"],
                                 Rating = (decimal)item["vote_average"],
                                 Poster_path = (string)item["poster_path"],
-                                Overview = (string)item["overview"]
+                                Overview = (string)item["overview"],
+                                Cast = cast
                             }
                         );
                         modelBuilder.Entity<SeriesComment>().HasData(
                             new SeriesComment {
                                 Id = counter,
                                 SId = counter,
-                                Creator = "Anonymous",
+                                Creator = "Developers",
                                 Text = "This is a sample text for " + (string)item["original_name"]
                             }
                         );

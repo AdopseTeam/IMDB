@@ -3,27 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcSeries.Data;
 using MvcSeries.Models;
+using MvcActor.Data;
 using System.Dynamic;
 using System.Linq;
 using IMDB.Views;
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 
 namespace IMDB.Controllers
 {
-    [Authorize]
     public class SeriesController : Controller
     {
         private const string ControllerName = "Series";
         private readonly MvcSeriesContext _context;
         private UserManager<IdentityUser> _userManager;
+        private readonly MvcActorContext _actorContext;
 
 
-        public SeriesController(MvcSeriesContext context, UserManager<IdentityUser> userManager)
+        public SeriesController(MvcSeriesContext context, UserManager<IdentityUser> userManager, MvcActorContext actorContext)
         {
             _context = context;
             _userManager = userManager;
+            _actorContext = actorContext;
         }
         // GET: Series
         public async Task<IActionResult> Index(string searchString,int? pageNumber)
@@ -53,10 +55,17 @@ namespace IMDB.Controllers
             {
                 return NotFound();
             }
+            var actorList = _context.Series.FirstOrDefault(m => m.Id == id).Cast.Split(",").ToList();
+            actorList.RemoveAt(actorList.Count - 1);
+            var actors = actorList.Select(int.Parse).ToList();
             dynamic mymodel = new ExpandoObject();
             mymodel.SComments = await _context.SComments.Where(s => s.SId == id).ToListAsync();
-
             mymodel.Series = await _context.Series.FirstOrDefaultAsync(m => m.Id == id);
+            var finalActors = new List<MvcActor.Models.Actor>();
+            foreach(int actorId in actors){
+                finalActors.Add(await _actorContext.Actor.FirstOrDefaultAsync(a => a.ActorId == actorId));
+            }
+            mymodel.Actor = finalActors;
             if (mymodel.Series == null)
             {
                 return NotFound();
