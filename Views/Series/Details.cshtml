@@ -12,6 +12,11 @@
 <div class="container">
     <h4>Series</h4>
     <hr />
+    @{ 
+        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Series.Poster_path;
+
+    }
+    <img src="@ImgPath" />
     <dl class="row">
         <dt class="col-sm-2">
             Title

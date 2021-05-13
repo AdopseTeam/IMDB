@@ -29,7 +29,7 @@ namespace IMDB.Controllers
         public IActionResult NewMovie(int CurrentMovieId)
         {
             var CurrentUserId = _userManager.GetUserId(HttpContext.User);
-            //_watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
+            _watchlistRepo.AddUserIdToAppUserTable(CurrentUserId);
             var watchlist = new Watchlist
             {
                 MoviesId = CurrentMovieId,
