@@ -57,7 +57,8 @@ namespace MvcMovie.Data
                                 Rating = (decimal)item["vote_average"],
                                 Poster_path= (string)item["poster_path"],
                                 Overview=(string)item["overview"],
-                                Cast = cast
+                                Cast = cast,
+                                Votes = new Random().Next(100,1000)
                             }
                         );
                          modelBuilder.Entity<MovieComment>().HasData(
@@ -65,7 +66,7 @@ namespace MvcMovie.Data
                                 Id = counter,
                                 MId = counter,
                                 Creator = "Developers",
-                                Text = "This is a sample text for " + (string)item["original_name"]
+                                Text = "This is a sample text for " + (string)item["original_title"]
                             }
                         );
                     }

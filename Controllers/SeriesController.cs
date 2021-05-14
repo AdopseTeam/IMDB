@@ -88,7 +88,42 @@ namespace IMDB.Controllers
             _context.SComments.Add(comment);
             _context.SaveChanges();
             return LocalRedirect("/Series/Details/"+id);
-
+        }
+        public LocalRedirectResult LikeSeries(int SeriesId){
+            var user = _userManager.GetUserName(HttpContext.User);
+            var series = _context.Series.FirstOrDefault(m => m.Id == SeriesId);
+            if(series.Likes?.ToList() == null){
+                var newList = new List<string>();
+                newList.Add(user);
+                series.Likes = newList;
+                series.Votes = series.Votes + 1;
+                _context.SaveChanges();
+            }else if(!series.Likes.ToList().Contains(user)){
+                var newList = series.Likes.ToList();
+                newList.Add(user);
+                series.Likes = newList;
+                series.Votes = series.Votes + 1;
+                _context.SaveChanges();
+            }
+            return LocalRedirect("/Series/Details/" + SeriesId);
+        }
+        public LocalRedirectResult DislikeSeries(int SeriesId){
+            var user = _userManager.GetUserName(HttpContext.User);
+            var series = _context.Series.FirstOrDefault(m => m.Id == SeriesId);
+            if(series.Dislikes?.ToList() == null){
+                var newList = new List<string>();
+                newList.Add(user);
+                series.Dislikes = newList;
+                series.Votes = series.Votes + 1;
+                _context.SaveChanges();
+            }else if(!series.Dislikes.ToList().Contains(user)){
+                var newList = series.Dislikes.ToList();
+                newList.Add(user);
+                series.Dislikes = newList;
+                series.Votes = series.Votes + 1;
+                _context.SaveChanges();
+            }
+            return LocalRedirect("/Series/Details/" + SeriesId);
         }
     }
 }

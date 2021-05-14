@@ -91,5 +91,42 @@ namespace IMDB.Controllers
             return LocalRedirect("/Movies/Details/" + Movieid);
         }
 
+        public LocalRedirectResult LikeMovie(int Movieid){
+            var user = _userManager.GetUserName(HttpContext.User);
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == Movieid);
+            if(movie.Likes?.ToList() == null){
+                var newList = new List<string>();
+                newList.Add(user);
+                movie.Likes = newList;
+                movie.Votes = movie.Votes + 1;
+                _context.SaveChanges();
+            }else if(!movie.Likes.ToList().Contains(user)){
+                var newList = movie.Likes.ToList();
+                newList.Add(user);
+                movie.Likes = newList;
+                movie.Votes = movie.Votes + 1;
+                _context.SaveChanges();
+            }
+            return LocalRedirect("/Movies/Details/" + Movieid);
+        }
+        public LocalRedirectResult DislikeMovie(int Movieid){
+            var user = _userManager.GetUserName(HttpContext.User);
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == Movieid);
+            if(movie.Dislikes?.ToList() == null){
+                var newList = new List<string>();
+                newList.Add(user);
+                movie.Dislikes = newList;
+                movie.Votes = movie.Votes - 1;
+                _context.SaveChanges();
+            }else if(!movie.Dislikes.ToList().Contains(user)){
+                var newList = movie.Dislikes.ToList();
+                newList.Add(user);
+                movie.Dislikes = newList;
+                movie.Votes = movie.Votes - 1;
+                _context.SaveChanges();
+            }
+            return LocalRedirect("/Movies/Details/" + Movieid);
+        }
+
     }
 }

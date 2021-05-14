@@ -93,10 +93,19 @@
                 <label for="text">Your comment: </label>
                 <input type="text" name="text">
                 </form>
+                 <div>
+                    <span>Votes</span>
+                    <span>@Model.Movie.Votes</span>
+                    <form asp-action="LikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+                        <input type="submit" value="Like">
+                    </form>
+                    <form asp-action="DislikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+                        <input type="submit" value="Dislike">
+                    </form>
+                </div>
             }
         </dt>
     </dl>
-
     <div>
         <a asp-action="Index">Back to List</a>
     </div>

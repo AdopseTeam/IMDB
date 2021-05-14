@@ -57,7 +57,8 @@ namespace MvcSeries.Data
                                 Rating = (decimal)item["vote_average"],
                                 Poster_path = (string)item["poster_path"],
                                 Overview = (string)item["overview"],
-                                Cast = cast
+                                Cast = cast,
+                                Votes = new Random().Next(100,1000)
                             }
                         );
                         modelBuilder.Entity<SeriesComment>().HasData(
