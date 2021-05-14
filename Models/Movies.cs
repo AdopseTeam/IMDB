@@ -19,8 +19,8 @@ namespace MvcMovie.Models{
         public string Cast {get; set;}
         public int Votes {get; set;}
 
-        public List<int> Likes {get;set;}
-        public List<int> Dislikes {get; set;}
+        public List<string> Likes {get;set;}
+        public List<string> Dislikes {get; set;}
 
         public IdentityUser User { get; set; }
         public string UserId { get; set; }
