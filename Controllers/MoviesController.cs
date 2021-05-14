@@ -98,6 +98,13 @@ namespace IMDB.Controllers
             _context.SaveChanges();
             return LocalRedirect("/Movies/Details/" + Movieid);
         }
+        public LocalRedirectResult DislikeMovie(int Movieid){
+            var user = _userManager.GetUserName(HttpContext.User);
+            var movie = _context.Movies.FirstOrDefault(m => m.Id == Movieid);
+            movie.Votes = movie.Votes -1;
+            _context.SaveChanges();
+            return LocalRedirect("/Movies/Details/" + Movieid);
+        }
 
     }
 }

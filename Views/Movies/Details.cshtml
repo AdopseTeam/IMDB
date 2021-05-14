@@ -102,6 +102,9 @@
         <form asp-action="LikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
             <input type="submit" value="Like">
         </form>
+        <form asp-action="DislikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+            <input type="submit" value="Dislike">
+        </form>
     </div>
     <div>
         <a asp-action="Index">Back to List</a>
