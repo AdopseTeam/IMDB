@@ -33,7 +33,7 @@
                     }
                     <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <h5 class="card-title font-weight-bold text-truncate">@Html.DisplayFor(modelItem => item.Title)</h5>
                         <div>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>

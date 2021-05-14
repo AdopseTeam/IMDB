@@ -36,7 +36,7 @@ namespace IMDB.Controllers
                 var movies = from m in _released.Movies
                     select m;
                 
-                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<=0).Where(s => s.ReleaseDate.Month.Equals(month));
+                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<0).Where(s => s.ReleaseDate.Month.Equals(month));
                 
             return View(await movies.Take(12).ToListAsync());
         }
@@ -52,7 +52,7 @@ namespace IMDB.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ReleasedOnThisDay()
+        public async Task<IActionResult> ReleasedOnThisMonth()
         {
                 //day = DateTime.Today.Day;
                 month = DateTime.Today.Month;
@@ -62,7 +62,7 @@ namespace IMDB.Controllers
                         select m;
                 
                 //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month));
-                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<=0).Where(s => s.ReleaseDate.Month.Equals(month));
+                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<0).Where(s => s.ReleaseDate.Month.Equals(month));
                 //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month)).Where(s => s.ReleaseDate.Day.Equals(day));
 
             return View(await movies.ToListAsync());

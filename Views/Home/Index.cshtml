@@ -28,7 +28,7 @@
 <div class="carousel-inner">
 	<div class="carousel-item active">
 		<img src="~/img/movie1.png">
-		<div class="carousel-caption">
+		<div class="carousel-caption d-none d-md-block">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
 			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
@@ -36,7 +36,7 @@
 	</div>
 	<div class="carousel-item">
 		<img src="~/img/movie2.png">
-		<div class="carousel-caption">
+		<div class="carousel-caption d-none d-md-block">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
 			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
@@ -44,7 +44,7 @@
 	</div>
 	<div class="carousel-item">
 		<img src="~/img/movie3.png">
-		<div class="carousel-caption">
+		<div class="carousel-caption d-none d-md-block">
 			<h1 class="display-2">TOP PICKS</h1>
 			<h3>TV shows and movies just for you</h3>
 			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
@@ -58,33 +58,40 @@
 <!--Released On This Month Carousel-->
 
 <div class="col-12">
-	<h3>Released On This Day<h3>
+	<a class="h3" asp-controller="Home" asp-action="ReleasedOnThisMonth">Released On This Month</a>
 </div>
 
 <div class="container-fluid padding">
 
-		<div id="carousel-month" class="carousel slide">
-    		<div class="carousel-inner row bg-dark px-3 pt-4">
+		<div id="carousel-month" class="carousel slide" data-interval="false">
+    		<div class="carousel-inner">
+				
         		@foreach (var group in Model.Select((x, index) => new { element = x, index }).GroupBy(x => x.index / 3, x => x.element))
 				{
-					<div class="carousel-item col-3 @((group.Key == 0)?Html.Raw("active"):Html.Raw(""))">
-        				@foreach (var item in group) {
-							<div class="row mb-4" style="align-items: center">
-        						<div class="card-dsp col">
-            					
-                					<a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="https://m.media-amazon.com/images/M/MV5BYjI3NDg0ZTEtMDEwYS00YWMyLThjYjktMTNlM2NmYjc1OGRiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" class="card-img-top" alt="..."></a>
-                					<div class="card-body">
-                   			 			<p><img src="~/img/yellow_star.svg"style="vertical-align: sub; width:21px; height:21px"> @Html.DisplayFor(modelItem => item.Rating)</p>
+				<div class="carousel-item @((group.Key == 0)?Html.Raw("active"):Html.Raw(""))">
+					<div class="row no-gutters justify-content-center">
+						
+        					@foreach (var item in group) {
+								<div class="col-4">
+        						<div class="card card-dsp">
+                        				@{
+											string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+										}
+                					<a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" class="card-img-top" alt="..."></a>
+									<div class="card-body">
+                   			 			<p><img src="~/img/yellow_star.svg"style="vertical-align: sub; width:20px; height:20px"> @Html.DisplayFor(modelItem => item.Rating)</p>
                     					<a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.Title)</h6></a>
                         				<p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Genre)</p>
-                   				 		<br>
-                    					<a class ="btn btn-dark btn-block" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">Watchlist</a>
 									</div>
-                				</div>
-            				</div>	
-       					}
+								</div>	
+            					</div>
+       						}
+						
 					</div>
+
+				</div>
 				}
+				
 			</div>
 			<a class="carousel-control-prev" href="#carousel-month" role="button" data-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -95,6 +102,6 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-	    
+
 </div>
 
