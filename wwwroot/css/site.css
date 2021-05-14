@@ -38,9 +38,10 @@ for details on configuring this project to bundle and minify static web assets. 
 html, body{
 	font-family: 'Poppins', sans-serif;
 	color: #000000;
-  background-image: linear-gradient(90deg, #B03701
+	background-color:whitesmoke;
+  /*background-image: linear-gradient(90deg, #B03701
   , #E26001);
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);*/
 }
 
 [class*="col-"] {
@@ -92,11 +93,11 @@ html, body{
 }
 
 a{
-  color: white;
+  color: black;
 }
 
 a:hover {
-  color: white;
+  color: #808080;
 }
 .pt-6,
 .py-6 {
@@ -130,4 +131,10 @@ a:hover {
 .input-container input {
     display: inline;
     vertical-align: middle;
+}
+}
+
+
+.card-body a, .card-body p {
+	color: white;
 }

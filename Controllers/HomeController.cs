@@ -18,8 +18,7 @@ namespace IMDB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly MvcMovieContext _released;
-        public static DateTime today;
-        public static int day, month;
+
         
         public HomeController(ILogger<HomeController> logger, MvcMovieContext released)
         {
@@ -29,24 +28,15 @@ namespace IMDB.Controllers
         
         public async Task<IActionResult> Index()
         {
-
-                month = DateTime.Today.Month;
-                today = DateTime.Today.Date;
-                
-                var movies = from m in _released.Movies
+            int currentMonth = DateTime.Now.Month;
+            
+                var movies = from m in _released.Movies.Where(m=>(m.ReleaseDate).Month==currentMonth)
                     select m;
+               
                 
-                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<0).Where(s => s.ReleaseDate.Month.Equals(month));
-                
-            return View(await movies.Take(12).ToListAsync());
+            return View(await movies.Take(25).ToListAsync());
         }
         
-        /*
-        public IActionResult Index()
-        {
-            return View();
-        }
-        */
         public IActionResult Privacy()
         {
             return View();
@@ -54,16 +44,10 @@ namespace IMDB.Controllers
 
         public async Task<IActionResult> ReleasedOnThisMonth()
         {
-                //day = DateTime.Today.Day;
-                month = DateTime.Today.Month;
-                today = DateTime.Today.Date;
-                
-                var movies = from m in _released.Movies
-                        select m;
-                
-                //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month));
-                movies = movies.Where(s => s.ReleaseDate.CompareTo(today)<0).Where(s => s.ReleaseDate.Month.Equals(month));
-                //movies = movies.Where(s => s.ReleaseDate.Month.Equals(month)).Where(s => s.ReleaseDate.Day.Equals(day));
+            int currentMonth = DateTime.Now.Month;
+
+            var movies = from m in _released.Movies.Where(m => (m.ReleaseDate).Month == currentMonth)
+                         select m;
 
             return View(await movies.ToListAsync());
         }
