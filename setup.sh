@@ -8,8 +8,6 @@ dotnet ef migrations add InitialCreate --context MvcActorContext
 
 dotnet ef migrations add InitialCreate --context AuthUserDBContext
 
-dotnet ef database update -c MvcMovieContext
-
 dotnet ef database update -c MvcSeriesContext
 
 dotnet ef database update -c MvcActorContext

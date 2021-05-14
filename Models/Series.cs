@@ -16,6 +16,9 @@ namespace MvcSeries.Models
         public string Genre { get; set; }
         public decimal Rating { get; set; }
         public string Cast {get; set;}
+        public int Votes {get; set;}
+        public List<string> Likes {get;set;}
+        public List<string> Dislikes {get; set;}
     }
 
     public class SeriesComment

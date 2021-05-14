@@ -12,7 +12,7 @@
 <div class="container">
     <h4>Series</h4>
     <hr />
-    @{ 
+    @{
         string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Series.Poster_path;
 
     }
@@ -90,6 +90,16 @@
                 <label for="text">Your comment: </label>
                 <input type="text" name="text">
                 </form>
+                 <div>
+                    <span>Votes</span>
+                    <span>@Model.Series.Votes</span>
+                    <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Movie.Id">
+                        <input type="submit" value="Like">
+                    </form>
+                    <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Movie.Id">
+                        <input type="submit" value="Dislike">
+                    </form>
+                </div>
             }
         </dd>
     </dl>
