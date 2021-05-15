@@ -1,53 +1,117 @@
-﻿@{
+﻿@model IEnumerable<MvcMovie.Models.Movies>
+@using System.Globalization;
+@section Scripts{
+    <script src='@Url.Content("~/wwwroot/js/site.js")'></script>
+    
+    <script>
+        new Glide('.glide', {
+            type: 'carousel',
+            startAt: 0,
+            perView: 6,
+            focusAt: 'center',
+            breakpoints:
+            {
+                600: { perView: 3 },
+                900: { perView: 4 }
+            }
+        }).mount()
+    </script>
+}
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container-fluid padding">
-<div class="row welcome text-center">	
-	<div class="col-12">
-		<p class="lead">
-			Welcome to IMDb, a place where you can find everything about movies, TV and celebrity content. Find ratings and reviews for the newest movie and TV shows.
-		</p>
-	</div>
-	<hr>
-	<div id="wtw" class="col-12">
-		<h1 class="display-4">What to Watch.</h1>
-	</div>
-</div>
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <p class="lead">
+                Welcome to IMDb, a place where you can find everything about movies, TV and celebrity content. Find ratings and reviews for the newest movie and TV shows.
+            </p>
+        </div>
+        <hr>
+        <div id="wtw" class="col-12">
+            <h1 class="display-4">What to Watch.</h1>
+        </div>
+    </div>
 </div>
 
 <!--- Image Slider -->
 <div id="slides" class="carousel slide" data-ride="carousel">
-<ul class="carousel-indicators">
-	<li data-target="#slides" data-slide-to="0" class="active"></li>
-	<li data-target="#slides" data-slide-to="1"></li>
-	<li data-target="#slides" data-slide-to="2"></li>
-</ul>	
-<div class="carousel-inner">
-	<div class="carousel-item active">
-		<img src="img/movie1.png">
-		<div class="carousel-caption">
-			<h1 class="display-2">TOP PICKS</h1>
-			<h3>TV shows and movies just for you</h3>
-			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
-		</div>
-	</div>
-	<div class="carousel-item">
-		<img src="img/movie2.png">
-		<div class="carousel-caption">
-			<h1 class="display-2">TOP PICKS</h1>
-			<h3>TV shows and movies just for you</h3>
-			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
-		</div>
-	</div>
-	<div class="carousel-item">
-		<img src="img/movie3.png">
-		<div class="carousel-caption">
-			<h1 class="display-2">TOP PICKS</h1>
-			<h3>TV shows and movies just for you</h3>
-			<a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
-		</div>
-	</div>
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/img/movie1.png">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-2">TOP PICKS</h1>
+                <h3>TV shows and movies just for you</h3>
+                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/img/movie2.png">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-2">TOP PICKS</h1>
+                <h3>TV shows and movies just for you</h3>
+                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/img/movie3.png">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="display-2">TOP PICKS</h1>
+                <h3>TV shows and movies just for you</h3>
+                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<br>
+
+<div class="container-fluid padding">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <p class="lead display-4">
+                Released On @DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture)
+            </p>
+            <p class="lead">
+                Check out all the movies that were released on this month. They have their Birthday!
+                <hr />
+            </p>
+            
+        </div>
+    </div>
 </div>
-<div id="wtw" class="col-12"></div>
+
+<div class="row">
+    <div class="col">
+
+        <div class="glide">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    @foreach (var item in Model)
+                    {
+
+                        string ImgPath = "https://image.tmdb.org/t/p/w500" + item.Poster_path;
+
+                        <li class="glide__slide"><a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" /></a></li>
+                    }
+
+                </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+
+                <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fa fa-angle-right"></i></button>
+                <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fa fa-angle-left"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
