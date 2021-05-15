@@ -49,12 +49,9 @@
             @Model.Series.Rating
         </dd>
         <dt class="col-sm-2">
-            Overview
+            Cast
         </dt>
         <dd class="col-sm-10">
-            @Model.Series.Overview
-        </dd>
-        <dt>
             @foreach (var actor in Model.Actor)
                 {
                     @if (actor != null)
@@ -62,47 +59,53 @@
                         @actor.FirstName @actor.LastName
                     }
                 }
+        </dd>
+        <dt class="col-sm-2">
+            Overview
         </dt>
-        @foreach (var comment in Model.SComments)
-        {
-            <dd class="col-sm-2">
-            Comment creator
-            </dd>
-            <dt class="col-sm-10">
-                @comment.Creator
-            </dt>
-            <dd class="col-sm-2">
-                Comment Date
-            </dd>
-            <dt class="col-sm-10">
-                @comment.PubDate
-            </dt>
-            <dd class="col-sm-2">
-                Comment Text
-            </dd>
-            <dt class="col-sm-10">
-                @comment.Text
-            </dt>
-        }
-        <dd class="col-sm-2">
-            @if(SignInManager.IsSignedIn(User)){
-                <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
-                <label for="text">Your comment: </label>
-                <input type="text" name="text">
-                </form>
-                 <div>
-                    <span>Votes</span>
-                    <span>@Model.Series.Votes</span>
-                    <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Movie.Id">
-                        <input type="submit" value="Like">
-                    </form>
-                    <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Movie.Id">
-                        <input type="submit" value="Dislike">
-                    </form>
-                </div>
-            }
+        <dd class="col-sm-10">
+            @Model.Series.Overview
         </dd>
     </dl>
+    <h4>Comments</h4>  
+        <hr/> 
+        <div class="container1 mt-5">
+                    <div class="bg-muted p-2">
+                        @foreach (var comment in Model.SComments)
+                        {
+                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40">
+                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.Creator</span><span class="date text-white-50" >Shared publicly - @comment.PubDate</span></div>
+                        </div>
+                        <div class="mt-2">
+                            @comment.Text
+                        </div>
+                        <br>
+                        <br>
+                        }
+                    </div>
+                    <div class="bg-muted p-2">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
+                            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
+                            <input type="text" name="text" placeholder="Comment Here">
+                            </form>
+                            <div>
+                                <span>Votes</span>
+                                <span>@Model.Series.Votes</span>
+                                <div class="input-container">
+                                <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
+                                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
+                                </form>
+                                <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
+                                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
+                                </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+        </div>
+    <br>
     <div>
     <a asp-action="Index">Back to List</a>
     </div>
