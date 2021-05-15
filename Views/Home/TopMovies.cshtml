@@ -1,0 +1,40 @@
+@model IEnumerable<MvcMovie.Models.Movies>
+
+@{
+    ViewData["Title"] = "Top Rating Movies";
+}
+
+<div class="container-fluid padding">
+    
+    <div class="header p-3"> 
+        <h2 class="py-2">@ViewData["Title"]</h2>
+        <p class="lead">Here are the best movies according to ratings!</p>
+    </div>
+    
+    <div class="row px-3 pt-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
+        
+        @foreach (var item in Model) {
+            <div class="col mb-4">
+                <div class="card-dsp">
+                    @{ 
+                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                    }
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <p><img src="~/img/yellow_star.svg" style="vertical-align: sub;"> @Html.DisplayFor(modelItem => item.Rating)</p>
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.Title)</h6></a>
+                        <div>
+                            <p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Genre)</p>
+                        </div> 
+                        @if (User.Identity.IsAuthenticated)
+                        {   
+                            <br/>
+                            <a class="btn btn-dark btn-block" asp-controller="Watchlist" asp-action="NewMovie" asp-route-CurrentMovieId="@item.Id">Add to Watchlist</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
