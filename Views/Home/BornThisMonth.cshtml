@@ -1,0 +1,35 @@
+@model IEnumerable<MvcActor.Models.Actor>
+
+@{
+    ViewData["Title"] = "Born This Month";
+}
+
+<div class="container-fluid padding">
+    
+    <div class="header p-3"> 
+        <h2 class="py-2">@ViewData["Title"]</h2>
+        <p class="lead">All these famous actors and actresses have their birthday this month!</p>
+    </div>
+    
+    <div class="row px-3 pt-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
+        @foreach (var item in Model) {
+            <div class="col mb-4">
+                <div class="card-dsp">
+                    @{
+                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Profile_pic_path;
+                    }
+                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">
+                            <h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h6>
+                        </a>
+                        <div>
+                            <p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Birthday)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
