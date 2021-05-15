@@ -20,7 +20,7 @@ namespace MvcMovie.Data
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
-            for(int i=1; i<3; i++){
+            for(int i=1; i<100; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
