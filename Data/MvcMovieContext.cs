@@ -15,14 +15,14 @@ namespace MvcMovie.Data
         }
         public void seedMovies(ModelBuilder modelBuilder){
             const string GURL = "https://api.themoviedb.org/3/genre/movie/list";
-            string GurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+            string GurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
             var genreResponse = HTTP.Response.returnResponse(GURL, GurlParameters);
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
             for(int i=1; i<3; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
-                string urlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US&page={i}";
+                string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
                 movieObject.Merge((JArray)movieReponse["results"]);
             }
@@ -39,7 +39,7 @@ namespace MvcMovie.Data
                         }
                         string MId = (string)item["id"];
                         string MURL = $"https://api.themoviedb.org/3/movie/{MId}/credits";
-                        string MurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+                        string MurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
                         var mResponse = HTTP.Response.returnResponse(MURL, MurlParameters);
                         JArray mjObject = (JArray)mResponse["cast"];
                         var cast = "";
@@ -49,7 +49,7 @@ namespace MvcMovie.Data
                             }
                         } catch {}
                         string VURL = $"https://api.themoviedb.org/3/movie/{MId}/videos";
-                        string VurlParameters = $"?api_key=e8aa54218562d4d13c49fea81693c67b&language=en-US";
+                        string VurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
                         var vResponse = HTTP.Response.returnResponse(VURL, VurlParameters);
                         var videoKey = "";
                         try { 
