@@ -34,7 +34,7 @@ namespace IMDB.Controllers
                     select m;
                
                 
-            return View(await movies.Take(25).ToListAsync());
+            return View(await movies.Take(18).ToListAsync());
         }
         
         public IActionResult Privacy()

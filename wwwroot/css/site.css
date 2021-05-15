@@ -154,3 +154,56 @@ a:hover {
 	margin-right: 1.5em;
 	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5L4.25 4l2.5-2.5L5.25 0z'/%3e%3c/svg%3e");
 }
+
+.main{
+	padding:50px 0;
+}
+li > a > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.glide__arrows .glide_arrow{
+	background: #000000;
+	border:none;
+	width:35px;
+	height:35px;
+	text-align:center;
+	line-height:35px;
+	border-radius:50px;
+	color:#fff;
+	font-size:22px;
+	outline:none;
+	margin-right:15px;
+}
+
+.glide__arrows .glide_arrow .glide__arrow--left{
+	left:0;
+}
+.glide__arrows .glide_arrow .glide__arrow--right {
+		right: -90px;
+	}
+
+.glide__slide{
+	transform:scale(.9);
+	filter:brightness(70%);
+	filter:blur(3.5px);
+	transition:all ease 0.25s;
+}
+
+.glide__slide.glide__slide--active {
+	filter: brightness(100%);
+	filter: blur(0);
+	transform: scale(1);
+}
+div.main > div.col-4{
+	width:34%;
+	float:left;
+	padding:30px 70px;
+}
+
+div.main > div.col-8{
+	width:66%;
+	float:left;
+}
