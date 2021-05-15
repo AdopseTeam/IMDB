@@ -1,120 +1,100 @@
-@model dynamic
+@model  dynamic
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Movie.Title;
 }
 
-<h1 class="title">Details</h1>
+@{
+    string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Movie.Poster_path;
+    string TrailerPath = "https://www.youtube.com/embed/" + Model.Movie.Videokey;
 
-<div class="container">
-    <h4>Movie</h4>
-    <hr />
-    @{
-        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Movie.Poster_path;
+}
 
-    }
-    <img src="@ImgPath" />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Title
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Movie.Title
-        </dd>
-        <dt class="col-sm-2">
-            Release Date
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Movie.ReleaseDate
-        </dd>
-        <dt class="col-sm-2">
-            Genre
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Movie.Genre
-        </dd>
-        <dt class="col-sm-2">
-            Rating
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Movie.Rating
-        </dd>
-        <dt class="col-sm-2">
-            Cast
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var actor in Model.Actor)
-                {
-                    @if (actor != null)
+<div class="container2">
+    <div id="movie-card-list" class="col">
+
+        <div class="movie-card" style="background-image:url(@ImgPath)">
+            <div class="color-overlay">
+                <div class="movie-content">
+                    <div class="movie-header">
+                        <h1 class="movie-title">@Model.Movie.Title</h1>
+                        <h4 class="movie-info">Genre: @Model.Movie.Genre</h4>
+                        <h4 class="movie-info">Rating: @Model.Movie.Rating</h4>
+
+                    </div>
+                    <p class="movie-desc">@Model.Movie.Overview</p>
+                    <p class="movie-desc">
+                        @foreach (var actor in Model.Actor)
+                        {
+                            @if (actor != null)
+                            {
+                                @actor.FirstName @actor.LastName
+                            }
+                        }
+                    </p>
+                    @if (SignInManager.IsSignedIn(User))
                     {
-                        @actor.FirstName @actor.LastName
+
+                        <a class="btn btn-dark"
+                           asp-action="NewMovie"
+                           asp-controller="Watchlist"
+                           asp-route-CurrentMovieId="@Model.Movie.Id">
+                            Add to Watchlist
+                        </a>
+
                     }
-                }
-        </dd>
-        <dt class="col-sm-2">
-            Overview
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Movie.Overview
-        </dd>
-        <dt class="col-sm-2">
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <div class="row">
-                    <a class="btn btn-dark"
-                       asp-action="NewMovie"
-                       asp-controller="Watchlist"
-                       asp-route-CurrentMovieId="@Model.Movie.Id">
-                        Add to Watchlist
-                    </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container2 py-5">
+    <h3>Watch the Trailer!</h3>
+    <iframe width="500" height="500"
+            src="@TrailerPath"
+            frameborder="0"
+            allowfullscreen></iframe>
+</div>
+
+<div class="container2 py-3">
+    <div class="comments-container">
+        <h3>Commenct Section</h3>
+        <div class="comment-main-level">
+            @foreach (var comment in Model.MComments)
+            {
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name">@comment.Creator</h6>
+                    </div>
+                    <div class="comment-content">
+                        @comment.Text
+                    </div>
+                </div>
+
             }
-        </dt>
-    </dl> 
-    <h4>Comments</h4>  
-    <hr/> 
-    <div class="container1 mt-5">
-                    <div class="bg-muted p-2">
-                        @foreach (var comment in Model.MComments)
-                        {
-                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40">
-                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.Creator</span><span class="date text-white-50" >Shared publicly - @comment.PubDate</span></div>
-                        </div>
-                        <div class="mt-2">
-                            @comment.Text
-                        </div>
-                        <br>
-                        <br>
-                        }
-                    </div>
-                    <div class="bg-muted p-2">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <form asp-action="NewMComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
-                            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
-                            <input type="text" name="text" placeholder="Comment Here">
-                            </form>
-                            <div>
-                                <br>
-                                <span>Votes</span>
-                                <span>@Model.Movie.Votes</span>
-                                <div class="input-container">
-                                <form asp-action="LikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
-                                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
-                                </form>
-                                <form asp-action="DislikeMovie" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
-                                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
-                                </form>
-                                </div>
-                            </div>
-                        }
-                    </div>
-    </div>
-    <br>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+        </div>
+    </div><br />
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form asp-action="NewComment" asp-controller="Movie" asp-route-id="@Model.Movie.Id">
+            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
+            <input type="text" name="text" placeholder="Comment Here">
+        </form>
+        <div>
+            <span>Votes</span>
+            <span>@Model.Movie.Votes</span>
+            <div class="input-container">
+                <form asp-action="LikeMovie" asp-controller="Movie" asp-route-MovieId="@Model.Movie.Id">
+                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
+                </form>
+                <form asp-action="DislikeMovie" asp-controller="Movie" asp-route-MovieId="@Model.Movie.Id">
+                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
+                </form>
+            </div>
+        </div>
+    }
 </div>
