@@ -102,3 +102,13 @@ a:hover {
 .py-6 {
   padding-top: 4rem !important;
 }
+
+.input-container form,
+.input-container form div {
+    display: inline;
+}
+
+.input-container input {
+    display: inline;
+    vertical-align: middle;
+}
