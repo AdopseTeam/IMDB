@@ -6,31 +6,32 @@
 }
 
 <div class="container-fluid padding">
-    
-    <div class="header p-3"> 
+
+    <div class="header p-3">
         <h2 class="py-2">@ViewData["Title"]</h2>
     <p class="lead">Need some inspiration? Check out all the movies that were released on this month. They have their birthday!</p>
     </div>
-    
-    <div class="row px-3 pt-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-        @foreach (var item in Model) {
-        <div class="col mb-4">
-            <div class="card-dsp">
-                @{ 
-                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
-                }
-                <a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" class="card-img-top" alt="..."></a>
-                <div class="card-body">
-                    <p><img src="~/img/yellow_star.svg" style="vertical-align: sub;"> @Html.DisplayFor(modelItem => item.Rating)</p>
-                    <a asp-controller="Movies" asp-action="Details" asp-route-CurrentMovieId="@item.Id"><h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.Title)</h6></a>
-                    <div>
-                        <p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Genre)</p>
-                    </div> <br>
-                    <a class ="btn btn-dark btn-block" asp-controller="Watchlist" asp-action="NewMovie" asp-route-id="@item.Id">Watchlist</a>
-                </div>
-            </div>
-        </div>
-        }
-    </div>
 
+    <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-4">
+                    <div class="card" style="width: 15rem;">
+                        @{
+                            string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                        }
+                        <img src="@ImgPath" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <div>
+                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate)</p>
+                                <p class="card-text"><strong>Genre:</strong> @item.Genre)</p>
+                                <p class="card-text"><strong>Rating:</strong> @item.Rating)</p>
+                            </div> <br>
+                            <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
 </div>
