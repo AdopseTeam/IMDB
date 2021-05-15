@@ -5,7 +5,8 @@ using Microsoft.Extensions.Logging;
 using IMDB.Models;
 using MvcMovie.Models;
 using MvcMovie.Data;
-
+using MvcActor.Models;
+using MvcActor.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,13 @@ namespace IMDB.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MvcMovieContext _released;
 
-        
-        public HomeController(ILogger<HomeController> logger, MvcMovieContext released)
+        private readonly MvcActorContext _born;
+
+        public HomeController(ILogger<HomeController> logger, MvcMovieContext released, MvcActorContext born)
         {
             _logger = logger;
             _released = released;
+            _born = born;
         }
         
         public async Task<IActionResult> Index()
@@ -52,6 +55,24 @@ namespace IMDB.Controllers
             return View(await movies.ToListAsync());
         }
 
+        public async Task<IActionResult> TopMovies()
+        {
+            var movies = from m in _released.Movies.Where(m => m.Rating >= 8) orderby m.Rating descending
+                        select m;
+            
+            return View(await movies.ToListAsync());
+        }
+
+        public async Task<IActionResult> BornThisMonth()
+        {
+            int currentMonth = DateTime.Now.Month;
+
+            var actors = from a in _born.Actor.Where(a => (a.Birthday).Month == currentMonth) orderby (a.Birthday).Day
+                    select a;
+
+            return View(await actors.ToListAsync());
+        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
