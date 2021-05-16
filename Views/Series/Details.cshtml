@@ -4,110 +4,88 @@
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Series.Title;
 }
 
-<h1 class="title">Details</h1>
-
-<div class="container">
-    <h4>Series</h4>
-    <hr />
     @{
         string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Series.Poster_path;
+        string TrailerPath = "https://www.youtube.com/embed/" + Model.Series.Videokey;
 
     }
-    <img src="@ImgPath" />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Title
-        </dt>
-        <dd class="col-sm-10">
-           @Model.Series.Title
-        </dd>
-        <dt class="col-sm-2">
-            Release Date
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Series.ReleaseDate
-        </dd>
-        <dt class="col-sm-2">
-            Seasons
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Series.Seasons
-        </dd>
-        <dt class="col-sm-2">
-            Genre
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Series.Genre
-        </dd>
-        <dt class="col-sm-2">
-           Rating
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Series.Rating
-        </dd>
-        <dt class="col-sm-2">
-            Cast
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var actor in Model.Actor)
-                {
-                    @if (actor != null)
-                    {
-                        @actor.FirstName @actor.LastName
-                    }
-                }
-        </dd>
-        <dt class="col-sm-2">
-            Overview
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Series.Overview
-        </dd>
-    </dl>
-    <h4>Comments</h4>  
-        <hr/> 
-        <div class="container1 mt-5">
-                    <div class="bg-muted p-2">
-                        @foreach (var comment in Model.SComments)
-                        {
-                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40">
-                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.Creator</span><span class="date text-white-50" >Shared publicly - @comment.PubDate</span></div>
-                        </div>
-                        <div class="mt-2">
-                            @comment.Text
-                        </div>
-                        <br>
-                        <br>
-                        }
+
+<div class="container2">
+    <div id="movie-card-list" class="col">
+
+        <div class="movie-card" style="background-image:url(@ImgPath)">
+            <div class="color-overlay">
+                <div class="movie-content">
+                    <div class="movie-header">
+                        <h1 class="movie-title">@Model.Series.Title</h1>
+                        <h4 class="movie-info">@Model.Series.Genre</h4>
+                        <h4 class="movie-info">@Model.Series.Rating</h4>
+
                     </div>
-                    <div class="bg-muted p-2">
-                        @if (SignInManager.IsSignedIn(User))
+                    <p class="movie-desc">@Model.Series.Overview</p>
+                    <p class="movie-desc">
+                        @foreach (var actor in Model.Actor)
                         {
-                            <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
-                            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
-                            <input type="text" name="text" placeholder="Comment Here">
-                            </form>
-                            <div>
-                                <span>Votes</span>
-                                <span>@Model.Series.Votes</span>
-                                <div class="input-container">
-                                <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
-                                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
-                                </form>
-                                <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
-                                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
-                                </form>
-                                </div>
-                            </div>
+                            @if (actor != null)
+                            {
+                                @actor.FirstName @actor.LastName
+                            }
                         }
-                    </div>
+                     </p>
+
+                </div>
+            </div>
         </div>
-    <br>
-    <div>
-    <a asp-action="Index">Back to List</a>
     </div>
+</div>
+
+<div class="container2 py-5">
+    <h3>Watch the Trailer!</h3>
+    <iframe width="500" height="500"
+            src="@TrailerPath"
+            frameborder="0"
+            allowfullscreen></iframe>
+</div>
+
+<div class="container2 py-3">
+    <div class="comments-container">
+        <h3>Commenct Section</h3>
+        <div class="comment-main-level">
+            @foreach (var comment in Model.SComments)
+            {
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name">@comment.Creator</h6>
+                    </div>
+                    <div class="comment-content">
+                        @comment.Text
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div><br />
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
+            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
+            <input type="text" name="text" placeholder="Comment Here">
+        </form>
+        <div>
+            <span>Votes</span>
+            <span>@Model.Series.Votes</span>
+            <div class="input-container">
+                <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
+                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
+                </form>
+                <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
+                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
+                </form>
+            </div>
+        </div>
+    }
 </div>
 

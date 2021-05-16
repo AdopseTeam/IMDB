@@ -1,53 +1,30 @@
 @model MvcActor.Models.Actor
 
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName;
 }
 
-<h1 class="title">Details</h1>
+@{
+    string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Profile_pic_path;
 
-<div class="container">
-    <h4>Actor</h4>
-    <hr />
-    @{
-        string ImgPath = "https://image.tmdb.org/t/p/w300" + Model.Profile_pic_path;
+}
 
-    }
-    <img src="@ImgPath" />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Birthday)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Birthday)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Bio)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Bio)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Profile_pic_path)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Profile_pic_path)
-        </dd>
-    </dl>
-    <div>
-        <a asp-action="Index">Back to List</a>
+<div class="container2">
+    <div id="movie-card-list" class="col">
+
+        <div class="movie-card" style="background-image:url(@ImgPath)">
+            <div class="color-overlay">
+                <div class="movie-content">
+                    <div class="movie-header">
+                        <h1 class="movie-title">@Model.FirstName @Model.LastName</h1>
+                        <h4 class="movie-info">@Model.Birthday</h4>
+
+                    </div>
+                    <p class="movie-desc">@Model.Bio</p>
+                    
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-

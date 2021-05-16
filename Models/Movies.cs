@@ -18,6 +18,7 @@ namespace MvcMovie.Models{
         public decimal Budget { get; set; }
         public string Cast {get; set;}
         public int Votes {get; set;}
+        public string Videokey { get; set; }
 
         public List<string> Likes {get;set;}
         public List<string> Dislikes {get; set;}

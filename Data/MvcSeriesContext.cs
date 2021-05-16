@@ -19,7 +19,7 @@ namespace MvcSeries.Data
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray seriesObject = new JArray();
-            for(int i=1; i<50; i++){
+            for(int i=1; i<100; i++){
                 const string URL = "https://api.themoviedb.org/3/tv/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
@@ -47,6 +47,17 @@ namespace MvcSeries.Data
                                 cast = cast + (string)actor["id"] + ",";
                             }
                         } catch{}
+                        string VURL = $"https://api.themoviedb.org/3/tv/{sId}/videos";
+                        string VurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+                        var vResponse = HTTP.Response.returnResponse(VURL, VurlParameters);
+                        var videoKey = "";
+                        try
+                        {
+                            JArray vObject = (JArray)vResponse["results"];
+                            var firstVideo = (JObject)vObject.First;
+                            videoKey = (string)firstVideo["key"];
+                        }
+                        catch { }
                         modelBuilder.Entity<Series>().HasData(
                             new Series{
                                 Id = counter,
@@ -58,7 +69,8 @@ namespace MvcSeries.Data
                                 Poster_path = (string)item["poster_path"],
                                 Overview = (string)item["overview"],
                                 Cast = cast,
-                                Votes = new Random().Next(100,1000)
+                                Votes = new Random().Next(100,1000),
+                                Videokey=videoKey
                             }
                         );
                         modelBuilder.Entity<SeriesComment>().HasData(

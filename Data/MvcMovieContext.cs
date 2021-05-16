@@ -20,7 +20,7 @@ namespace MvcMovie.Data
             JArray genrejObject = (JArray)genreResponse["genres"];
 
             JArray movieObject = new JArray();
-            for(int i=1; i<50; i++){
+            for(int i=1; i<100; i++){
                 const string URL = "https://api.themoviedb.org/3/movie/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var movieReponse = HTTP.Response.returnResponse(URL, urlParameters);
@@ -48,6 +48,15 @@ namespace MvcMovie.Data
                                 cast = cast + (string)actor["id"] + ",";
                             }
                         } catch {}
+                        string VURL = $"https://api.themoviedb.org/3/movie/{MId}/videos";
+                        string VurlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
+                        var vResponse = HTTP.Response.returnResponse(VURL, VurlParameters);
+                        var videoKey = "";
+                        try { 
+                        JArray vObject = (JArray)vResponse["results"];
+                        var firstVideo =(JObject) vObject.First;
+                        videoKey =(string)firstVideo["key"];
+                        }catch {}
                         modelBuilder.Entity<Movies>().HasData(
                             new Movies{
                                 Id = counter,
@@ -58,6 +67,7 @@ namespace MvcMovie.Data
                                 Poster_path= (string)item["poster_path"],
                                 Overview=(string)item["overview"],
                                 Cast = cast,
+                                Videokey= videoKey,
                                 Votes = new Random().Next(100,1000)
                             }
                         );

@@ -19,6 +19,7 @@ namespace MvcSeries.Models
         public int Votes {get; set;}
         public List<string> Likes {get;set;}
         public List<string> Dislikes {get; set;}
+        public string Videokey { get; set; }
     }
 
     public class SeriesComment
