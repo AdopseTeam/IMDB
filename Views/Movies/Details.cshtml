@@ -22,7 +22,7 @@
                         <h1 class="movie-title text-dark">@Model.Movie.Title</h1>
                         <h4 class="movie-info">Genre: @Model.Movie.Genre</h4>
                         <h4 class="movie-info">Rating: @Model.Movie.Rating</h4>
-                        <h4 class="movie-info">Rating: @Model.Movie.ReleaseDate.ToString("dd/MM/yyyy")</h4>
+                        <h4 class="movie-info">Release Date: @Model.Movie.ReleaseDate.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Movie.Overview</p>
@@ -76,8 +76,8 @@
 </div>
 
 <div class="container2 py-3">
-    <div class="comments-container">
-        <h3>Commenct Section</h3>
+    <h3>Comment Section</h3>
+    <div class="comment-div">
         <div class="comment-main-level">
             @foreach (var comment in Model.MComments)
             {
@@ -96,7 +96,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="comment-box" style="padding: 10px;">
-            <form asp-action="NewComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+            <form asp-action="NewMComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
                 <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
                 <input type="text" name="text" placeholder="Comment Here">
             </form>
