@@ -5,31 +5,32 @@
 }
 
 <div class="container-fluid padding">
-    
-    <div class="header p-3"> 
+
+    <div class="header p-3">
         <h2 class="py-2">@ViewData["Title"]</h2>
         <p class="lead">All these famous actors and actresses have their birthday this month!</p>
     </div>
-    
-    <div class="row px-3 pt-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-        @foreach (var item in Model) {
-            <div class="col mb-4">
-                <div class="card-dsp">
-                    @{
-                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Profile_pic_path;
-                    }
-                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" class="card-img-top" alt="..."></a>
-                    <div class="card-body">
-                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">
-                            <h6 class="card-title pb-1 text-truncate">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h6>
-                        </a>
-                        <div>
-                            <p class="card-text text-truncate text-muted small">@Html.DisplayFor(modelItem => item.Birthday)</p>
+
+     <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-4">
+                    <div class="card" style="width: 15rem;">
+                        @{
+                            string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Profile_pic_path;
+                        }
+                        <img src="@ImgPath" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-truncate">@item.FirstName  @item.LastName</h5>
+                            <div>
+                                <p class="card-text"><strong>Birthday:</strong> @item.Birthday</p>
+                                <p class="card-text"><strong>Bio:</strong> @item.Bio.Substring(0,20)...</p>
+                            </div> <br>
+                            <a class="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>
                         </div>
                     </div>
                 </div>
+                }
             </div>
-        }
-    </div>
 
 </div>

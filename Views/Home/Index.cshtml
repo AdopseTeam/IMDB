@@ -1,23 +1,5 @@
-﻿@model IEnumerable<MvcMovie.Models.Movies>
+﻿@model dynamic;
 @using System.Globalization;
-@section Scripts{
-    <script src='@Url.Content("~/wwwroot/js/site.js")'></script>
-    
-    <script>
-        new Glide('.glide', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 6,
-            focusAt: 'center',
-            breakpoints:
-            {
-                600: { perView: 3 },
-                900: { perView: 4 }
-            }
-        }).mount()
-    </script>
-}
-
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -35,48 +17,37 @@
         </div>
     </div>
 </div>
-
-<!--- Image Slider -->
-<div id="slides" class="carousel slide" data-ride="carousel">
-    <ul class="carousel-indicators">
-        <li data-target="#slides" data-slide-to="0" class="active"></li>
-        <li data-target="#slides" data-slide-to="1"></li>
-        <li data-target="#slides" data-slide-to="2"></li>
-    </ul>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="~/img/movie1.png">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-2">TOP PICKS</h1>
-                <h3>TV shows and movies just for you</h3>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
+    <div class="container-fluid padding">
+    <div class="row">
+        @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Take(6))
+        {
+            <div class="col mb-4">
+                <div class="card" style="width: 15rem;">
+                    @{
+                        string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                    }
+                    <img src="@ImgPath" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                        <div>
+                            <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate</p>
+                            <p class="card-text"><strong>Genre:</strong> @item.Genre</p>
+                            <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
+                        </div> <br>
+                        <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="carousel-item">
-            <img src="~/img/movie2.png">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-2">TOP PICKS</h1>
-                <h3>TV shows and movies just for you</h3>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="~/img/movie3.png">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-2">TOP PICKS</h1>
-                <h3>TV shows and movies just for you</h3>
-                <a href="#"><button type="button" class="btn btn-outline-light btn-lg">Watch full list</button></a>
-            </div>
-        </div>
+        }
     </div>
 </div>
-
 
 <br>
 
 <div class="container-fluid padding">
     <div class="row welcome text-center">
         <div class="col-12">
+            <a asp-controller="Home" asp-action="ReleasedOnThisMonth">
             <p class="lead display-4">
                 Released On @DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture)
             </p>
@@ -84,42 +55,37 @@
                 Check out all the movies that were released on this month. They have their Birthday!
                 <hr />
             </p>
-            
+            </a>
+            <div class="row">
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.ReleaseDate.Month == DateTime.Now.Month).Take(6))
+            {
+                <div class="col mb-4">
+                    <div class="card" style="width: 15rem;">
+                        @{
+                            string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                        }
+                        <img src="@ImgPath" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <div>
+                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate)</p>
+                                <p class="card-text"><strong>Genre:</strong> @item.Genre)</p>
+                                <p class="card-text"><strong>Rating:</strong> @item.Rating)</p>
+                            </div> <br>
+                            <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col">
-
-        <div class="glide">
-            <div class="glide__track" data-glide-el="track">
-                <ul class="glide__slides">
-                    @foreach (var item in Model)
-                    {
-
-                        string ImgPath = "https://image.tmdb.org/t/p/w500" + item.Poster_path;
-
-                        <li class="glide__slide"><a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id"><img src="@ImgPath" /></a></li>
-                    }
-
-                </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-
-                <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fa fa-angle-right"></i></button>
-                <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fa fa-angle-left"></i></button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<br>
 
 <div class="container-fluid padding">
     <div class="row welcome text-center">
         <div class="col-12">
+            <a asp-controller="Home" asp-action="TopMovies">
             <p class="lead display-4">
                 Top Movies
             </p>
@@ -127,7 +93,29 @@
                 Here are the TOP 10 movies according to ratings!
                 <hr />
             </p>
-            
+            </a>
+            <div class="row">
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.Rating >= 8).OrderByDescending(m => m.Rating).Take(6))
+            {
+                <div class="col mb-4">
+                    <div class="card" style="width: 15rem;">
+                        @{
+                            string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
+                        }
+                        <img src="@ImgPath" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <div>
+                                <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate</p>
+                                <p class="card-text"><strong>Genre):</strong> @item.Genre</p>
+                                <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
+                            </div> <br>
+                            <a class="btn btn-warning" asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -137,6 +125,7 @@
 <div class="container-fluid padding">
     <div class="row welcome text-center">
         <div class="col-12">
+            <a asp-controller="Home" asp-action="BornThisMonth">
             <p class="lead display-4">
                 Born On @DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture)
             </p>
@@ -144,7 +133,28 @@
                 All these famous actors and actresses have their birthday this month!
                 <hr />
             </p>
-            
+            </a>
+             <div class="row">
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Actor).Where(a => (a.Birthday).Month == DateTime.Now.Month).Take(6))
+            {
+                <div class="col mb-4">
+                    <div class="card" style="width: 15rem;">
+                        @{
+                            string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Profile_pic_path;
+                        }
+                        <img src="@ImgPath" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-truncate">@item.FirstName  @item.LastName</h5>
+                            <div>
+                                <p class="card-text"><strong>Birthday:</strong> @item.Birthday</p>
+                                <p class="card-text"><strong>Bio:</strong> @item.Bio.Substring(0,20)...</p>
+                            </div> <br>
+                            <a class="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
         </div>
     </div>
 </div>
