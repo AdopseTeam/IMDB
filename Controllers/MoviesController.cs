@@ -15,8 +15,6 @@ namespace IMDB.Controllers
 {
     public class MoviesController : Controller
     {
-        private const string ControllerName = "Movies";
-
         private readonly MvcMovieContext _context;
         private UserManager<IdentityUser> _userManager;
         private readonly MvcActorContext _actorContext;

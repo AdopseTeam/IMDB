@@ -4,6 +4,7 @@
     ViewData["Title"] = "Actors";
 }
 
+<div class="container2">
 <div class="title">
     <h1>Actors</h1>
     <div class="row">
@@ -14,6 +15,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 <br>
 
@@ -45,7 +47,7 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<div>
+<div class="text-center">
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
        class="btn btn-outline-warning @prevDisabled">

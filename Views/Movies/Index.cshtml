@@ -28,12 +28,12 @@
         {
             <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
-                    @{ 
+                    @{
                         string ImgPath = "https://image.tmdb.org/t/p/w300" + item.Poster_path;
                     }
                     <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold text-truncate">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <h5 class="card-title font-weight-bold text-truncate text-white">@Html.DisplayFor(modelItem => item.Title)</h5>
                         <div>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
@@ -51,7 +51,7 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<div>
+<div class="text-center">
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
        class="btn btn-outline-warning @prevDisabled">

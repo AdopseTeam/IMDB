@@ -8,7 +8,7 @@
     <div class="row welcome text-center">
         <div class="col-12">
             <p class="lead">
-                Welcome to IMDb, a place where you can find everything about movies, TV and celebrity content. Find ratings and reviews for the newest movie and TV shows.
+                Welcome to REVIEW, a place where you can find everything about movies, TV and celebrity content. Find ratings and reviews for the newest movie and TV shows.
             </p>
         </div>
         <hr>
@@ -28,9 +28,9 @@
                     }
                     <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                        <h5 class="card-title font-weight-bold text-truncate text-white">@item.Title</h5>
                         <div>
-                            <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate</p>
+                            <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate.ToString("dd/MM/yyyy")</p>
                             <p class="card-text"><strong>Genre:</strong> @item.Genre</p>
                             <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
                         </div> <br>
@@ -66,11 +66,11 @@
                         }
                         <img src="@ImgPath" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <h5 class="card-title font-weight-bold text-truncate text-white">@item.Title</h5>
                             <div>
-                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate)</p>
-                                <p class="card-text"><strong>Genre:</strong> @item.Genre)</p>
-                                <p class="card-text"><strong>Rating:</strong> @item.Rating)</p>
+                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate.ToString("dd/MM/yyyy")</p>
+                                <p class="card-text"><strong>Genre:</strong> @item.Genre</p>
+                                <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
                             </div> <br>
                             <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
                         </div>
@@ -104,10 +104,10 @@
                         }
                         <img src="@ImgPath" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <h5 class="card-title font-weight-bold text-truncate text-white">@item.Title</h5>
                             <div>
-                                <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate</p>
-                                <p class="card-text"><strong>Genre):</strong> @item.Genre</p>
+                                <p class="card-text"><strong>Release date:</strong> @item.ReleaseDate.ToString("dd/MM/yyyy")</p>
+                                <p class="card-text"><strong>Genre:</strong> @item.Genre</p>
                                 <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
                             </div> <br>
                             <a class="btn btn-warning" asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">More info</a>
@@ -144,9 +144,9 @@
                         }
                         <img src="@ImgPath" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold text-truncate">@item.FirstName  @item.LastName</h5>
+                            <h5 class="card-title font-weight-bold text-truncate text-white">@item.FirstName  @item.LastName</h5>
                             <div>
-                                <p class="card-text"><strong>Birthday:</strong> @item.Birthday</p>
+                                <p class="card-text"><strong>Birthday:</strong> @item.Birthday.ToString("dd/MM/yyyy")</p>
                                 <p class="card-text"><strong>Bio:</strong> @item.Bio.Substring(0,20)...</p>
                             </div> <br>
                             <a class="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>

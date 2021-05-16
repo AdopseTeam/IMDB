@@ -17,12 +17,12 @@
             <div class="color-overlay">
                 <div class="movie-content">
                     <div class="movie-header">
-                        <h1 class="movie-title">@Model.FirstName @Model.LastName</h1>
-                        <h4 class="movie-info">@Model.Birthday</h4>
+                        <h1 class="movie-title text-dark">@Model.FirstName @Model.LastName</h1>
+                        <h4 class="movie-info">@Model.Birthday.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Bio</p>
-                    
+
                 </div>
             </div>
         </div>
