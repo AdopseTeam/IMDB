@@ -20,9 +20,9 @@
                 <div class="movie-content">
                     <div class="movie-header">
                         <h1 class="movie-title text-dark">@Model.Series.Title</h1>
-                        <h4 class="movie-info">Genre: @Model.Series.Genre</h4>
-                        <h4 class="movie-info">Rating: @Model.Series.Rating</h4>
-                        <h4 class="movie-info">Release Date: @Model.Series.ReleaseDate.ToString("dd/MM/yyyy")</h4>
+                        <h4 class="movie-info">@Model.Series.Genre</h4>
+                        <h4 class="movie-info">@Model.Series.Rating</h4>
+                        <h4 class="movie-info">@Model.Series.ReleaseDate.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Series.Overview</p>
@@ -52,7 +52,7 @@
                                 </form>
                             </div>
                         </div> <br/>
-                        <a class="btn btn-dark" style="margin-bottom: 1rem;">
+                        <a class="btn btn-dark">
                             Add to Watchlist
                         </a>
                     }

@@ -216,17 +216,12 @@ div.main > div.col-8 {
   background-size: contain;
   background-repeat: no-repeat;
   /*width: 75%;*/
-  /* max-width: 1200px; */
-  height: 100%;
-  left: 0;
-  /* width: 100%; */
+  max-width: 1200px;
+  height: 600px;
   display: block;
   /*margin: 0px 0px 0px 4em;*/
   border-radius: 8px;
   box-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.25);
-  overflow: auto;
-  overflow-x: hidden;
-  width: 100%;
 }
 
 .color-overlay {
@@ -243,30 +238,11 @@ div.main > div.col-8 {
 }
 
 .movie-content {
-  width: 65%;
-  height: 100%;
+  width: 40%;
   display: block;
   position: relative;
   float: right;
   padding-right: 1em;
-  margin-top: 1em;
-}
-
-.movie-content-image {
-  height: 100% !important;
-  min-height: 100% !important;
-  display: block;
-  position: relative;
-  float: left;
-  margin-left: 1em;
-  margin-top: 1em;
-  margin-right: 1em;
-  margin-bottom: 1em;
-  background-color: white;
-  border-radius: 20px;
-  border: 1px;
-  width: 25%;
-  overflow: hidden;
 }
 
 .movie-info {
@@ -335,10 +311,9 @@ div.main > div.col-8 {
   .movie-card,
   .movie-card:nth-child(2),
   .movie-card:nth-child(3) {
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-    height: auto;
+    background-position: 50% 0%;
+    background-size: cover;
+    height: 400px;
   }
 
   .color-overlay {
@@ -364,9 +339,10 @@ div.main > div.col-8 {
 /*Comments*/
 
 .comments-container {
-  width: auto;
-  position: relative;
+  /*	margin: 10px auto 15px;
+	width: 768px;*/
 }
+
 .comments-container h1 {
   font-size: 36px;
   color: #283035;
@@ -390,7 +366,7 @@ div.main > div.col-8 {
 }
 
 .comments-list .comment-box {
-  width: auto;
+  width: 680px;
   float: right;
   position: relative;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -400,12 +376,6 @@ div.main > div.col-8 {
 
 .comment-box {
   box-shadow: 0px 8px 12px 0px rgb(0 0 0 / 25%);
-  border-radius: 8px;
-  margin-bottom: 1em;
-}
-
-.comment-div{
-  border-radius: 8px;
 }
 
 .comment-box .comment-head {
