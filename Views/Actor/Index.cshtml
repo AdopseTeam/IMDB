@@ -31,9 +31,9 @@
                     <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
                         <div>
-                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FirstName):</strong> @Html.DisplayFor(modelItem => item.FirstName)</p>
-                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.LastName):</strong> @Html.DisplayFor(modelItem => item.LastName)</p>
-                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Birthday):</strong> @Html.DisplayFor(modelItem => item.Birthday)</p>
+                            <p class="card-text"><strong>Name:</strong> @Html.DisplayFor(modelItem => item.FirstName)</p>
+                            <p class="card-text"><strong>Last name:</strong> @Html.DisplayFor(modelItem => item.LastName)</p>
+                            <p class="card-text"><strong>Birthday:</strong> @Html.DisplayFor(modelItem => item.Birthday)</p>
                         </div> <br>
                         <a class="btn btn-warning" asp-controller="Actor" asp-action="Details" asp-route-id="@item.Id">More info</a>
                     </div>
