@@ -14,40 +14,61 @@
     }
 
 <div class="container2">
-    <div id="movie-card-list" class="col">
-
-        <div class="movie-card" style="background-image:url(@ImgPath)">
+        <div class="movie-card">
             <div class="color-overlay">
+                <img class= "movie-content-image img-fluid" src="@ImgPath">
                 <div class="movie-content">
                     <div class="movie-header">
-                        <h1 class="movie-title">@Model.Series.Title</h1>
+                        <h1 class="movie-title text-dark">@Model.Series.Title</h1>
                         <h4 class="movie-info">@Model.Series.Genre</h4>
                         <h4 class="movie-info">@Model.Series.Rating</h4>
+                        <h4 class="movie-info">@Model.Series.ReleaseDate.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Series.Overview</p>
-                    <p class="movie-desc">
+                    <div class="movie-desc">
+                        <strong>Cast:</strong>
                         @foreach (var actor in Model.Actor)
                         {
                             @if (actor != null)
                             {
-                                @actor.FirstName @actor.LastName
+                                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Id">@actor.FirstName @actor.LastName</a>
                             }
                         }
-                     </p>
-
+                    </div>
+                    <div class="movie-desc">
+                        <strong>Votes</strong>
+                        <a>@Model.Series.Votes</a>
+                    </div>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div>
+                            <div class="input-container">
+                                <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
+                                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
+                                </form>
+                                <form asp-action="DislikeSeries" asp-controller="Series" asp-route-Series="@Model.Series.Id">
+                                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
+                                </form>
+                            </div>
+                        </div> <br/>
+                        <a class="btn btn-dark" style="margin-bottom: 1rem;">
+                            Add to Watchlist
+                        </a>
+                    }
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div class="container2 py-5">
     <h3>Watch the Trailer!</h3>
-    <iframe width="500" height="500"
+    <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
             src="@TrailerPath"
             frameborder="0"
             allowfullscreen></iframe>
+    </div>
 </div>
 
 <div class="container2 py-3">
@@ -59,6 +80,7 @@
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name">@comment.Creator</h6>
+                        <p class="text-muted" style="font-size: small;">@comment.PubDate.ToString("dd/MM/yyyy")</p>
                     </div>
                     <div class="comment-content">
                         @comment.Text
@@ -70,21 +92,11 @@
     </div><br />
     @if (SignInManager.IsSignedIn(User))
     {
-        <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
-            <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
-            <input type="text" name="text" placeholder="Comment Here">
-        </form>
-        <div>
-            <span>Votes</span>
-            <span>@Model.Series.Votes</span>
-            <div class="input-container">
-                <form asp-action="LikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
-                    <input type="image" src="~/img/like.png" alt="Submit" value="Like" width="40" height="40">
-                </form>
-                <form asp-action="DislikeSeries" asp-controller="Series" asp-route-SeriesId="@Model.Series.Id">
-                    <input type="image" src="~/img/dislike.png" alt="Submit" value="Dislike" width="40" height="40">
-                </form>
-            </div>
+        <div class="comment-box" style="padding: 10px;">
+            <form asp-action="NewComment" asp-controller="Series" asp-route-id="@Model.Series.Id">
+                <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
+                <input type="text" name="text" placeholder="Comment Here">
+            </form>
         </div>
     }
 </div>

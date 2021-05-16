@@ -28,6 +28,14 @@ namespace IMDB.Controllers
             var actors = from a in _context.Actor
                          select a;
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                string lowerName = searchString.ToLower();
+                var firstnames = actors.Where(s => s.FirstName.ToLower().Contains(lowerName));
+                var lastnames = actors.Where(s => s.LastName.ToLower().Contains(lowerName));
+                actors = firstnames.Concat(lastnames);
+            }
+
             int pageSize = 16;
             return View(await PaginatedList<Actor>.CreateAsync(actors.AsNoTracking(), pageNumber ?? 1, pageSize));
         }

@@ -22,11 +22,11 @@
                         }
                         <img src="@ImgPath" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold text-truncate">@item.Title</h5>
+                            <h5 class="card-title font-weight-bold text-truncate text-white">@item.Title</h5>
                             <div>
-                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate)</p>
-                                <p class="card-text"><strong>Genre:</strong> @item.Genre)</p>
-                                <p class="card-text"><strong>Rating:</strong> @item.Rating)</p>
+                                <p class="card-text"><strong>Release date:</strong>@item.ReleaseDate.ToString("dd/MM/yyyy")</p>
+                                <p class="card-text"><strong>Genre:</strong> @item.Genre</p>
+                                <p class="card-text"><strong>Rating:</strong> @item.Rating</p>
                             </div> <br>
                             <a class="btn btn-warning" asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">More info</a>
                         </div>

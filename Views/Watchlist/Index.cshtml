@@ -1,7 +1,10 @@
 ﻿@model List<Watchlist>
 
-<h2 class="title">My Watchlist</h2>
-
+<div class="container2">
+    <div class="title">
+        <h2 class="title">My Watchlist</h2>
+    </div>
+</div>
 <div class="container2">
     <div class="row">
         @foreach (var watchlist in @Model)
@@ -15,9 +18,9 @@
                         }
                         <img src="@ImgPath" />
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold">@watchlist.Movies.Title</h5>
+                        <h5 class="card-title font-weight-bold text-white">@watchlist.Movies.Title</h5>
                         <div>
-                            <p class="card-text"><strong>Release Date:</strong> @watchlist.Movies.ReleaseDate</p>
+                            <p class="card-text"><strong>Release Date:</strong> @watchlist.Movies.ReleaseDate.ToString("dd/MM/yyyy")</p>
                             <p class="card-text"><strong>Genre:</strong>@watchlist.Movies.Genre</p>
                             <p class="card-text"><strong>Rating:</strong>@watchlist.Movies.Rating</p>
                         </div> <br>

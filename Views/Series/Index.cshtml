@@ -4,6 +4,7 @@
     ViewData["Title"] = "Series";
 }
 
+<div class="container2">
 <div class="title">
     <h1>Series</h1>
     <div class="row">
@@ -14,6 +15,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 <br>
 
@@ -29,7 +31,7 @@
                     }
                     <img src="@ImgPath" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <h5 class="card-title font-weight-bold text-white">@Html.DisplayFor(modelItem => item.Title)</h5>
                         <div>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Seasons):</strong> @Html.DisplayFor(modelItem => item.Seasons)</p>
@@ -48,7 +50,7 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<div>
+<div class="text-center">
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
        class="btn btn-outline-warning @prevDisabled">
