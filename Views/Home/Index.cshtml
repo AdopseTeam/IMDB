@@ -19,7 +19,7 @@
 </div>
     <div class="container-fluid padding">
     <div class="row">
-        @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Take(6))
+        @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Take(4))
         {
             <div class="col mb-4">
                 <div class="card" style="width: 15rem;">
@@ -57,7 +57,7 @@
             </p>
             </a>
             <div class="row">
-            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.ReleaseDate.Month == DateTime.Now.Month).Take(6))
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.ReleaseDate.Month == DateTime.Now.Month).Take(4))
             {
                 <div class="col mb-4">
                     <div class="card" style="width: 15rem;">
@@ -95,7 +95,7 @@
             </p>
             </a>
             <div class="row">
-            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.Rating >= 8).OrderByDescending(m => m.Rating).Take(6))
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Movie).Where(m => m.Rating >= 8).OrderByDescending(m => m.Rating).Take(4))
             {
                 <div class="col mb-4">
                     <div class="card" style="width: 15rem;">
@@ -135,7 +135,7 @@
             </p>
             </a>
              <div class="row">
-            @foreach (var item in ((IEnumerable<dynamic>)Model.Actor).Where(a => (a.Birthday).Month == DateTime.Now.Month).Take(6))
+            @foreach (var item in ((IEnumerable<dynamic>)Model.Actor).Where(a => (a.Birthday).Month == DateTime.Now.Month).Take(4))
             {
                 <div class="col mb-4">
                     <div class="card" style="width: 15rem;">
