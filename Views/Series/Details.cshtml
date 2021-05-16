@@ -37,7 +37,7 @@
                         }
                     </div>
                     <div class="movie-desc">
-                        <strong>Votes</strong>
+                        <strong>Votes:</strong>
                         <a>@Model.Series.Votes</a>
                     </div>
                     @if (SignInManager.IsSignedIn(User))
@@ -72,7 +72,7 @@
 </div>
 
 <div class="container2 py-3">
-    <div class="comments-container">
+    <div class="comments-div">
         <h3>Comment Section</h3>
         <div class="comment-main-level">
             @foreach (var comment in Model.SComments)
