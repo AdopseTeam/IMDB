@@ -12,7 +12,9 @@
         string TrailerPath = "https://www.youtube.com/embed/" + Model.Series.Videokey;
 
     }
-
+<a style="position: relative; top: 0; left: 0;"class="btn btn-light"
+    asp-action="Index" asp-controller="Series"> << Back to Series</a>
+<br/>
 <div class="container2">
         <div class="movie-card">
             <div class="color-overlay">
@@ -20,9 +22,9 @@
                 <div class="movie-content">
                     <div class="movie-header">
                         <h1 class="movie-title text-dark">@Model.Series.Title</h1>
-                        <h4 class="movie-info">Genre: @Model.Series.Genre</h4>
-                        <h4 class="movie-info">Rating: @Model.Series.Rating</h4>
-                        <h4 class="movie-info">Release Date: @Model.Series.ReleaseDate.ToString("dd/MM/yyyy")</h4>
+                        <h4 class="movie-info">@Model.Series.Genre</h4>
+                        <h4 class="movie-info">@Model.Series.Rating</h4>
+                        <h4 class="movie-info">@Model.Series.ReleaseDate.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Series.Overview</p>

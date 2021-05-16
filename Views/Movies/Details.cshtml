@@ -12,7 +12,9 @@
     string TrailerPath = "https://www.youtube.com/embed/" + Model.Movie.Videokey;
 
 }
-
+<a style="position: relative; top: 0; left: 0;"class="btn btn-light"
+    asp-action="Index" asp-controller="Movies"> << Back to Movies</a>
+<br/>
 <div class="container2">
     <div class="movie-card">
         <div class="color-overlay">
@@ -22,7 +24,7 @@
                         <h1 class="movie-title text-dark">@Model.Movie.Title</h1>
                         <h4 class="movie-info">Genre: @Model.Movie.Genre</h4>
                         <h4 class="movie-info">Rating: @Model.Movie.Rating</h4>
-                        <h4 class="movie-info">Release Date: @Model.Movie.ReleaseDate.ToString("dd/MM/yyyy")</h4>
+                        <h4 class="movie-info">Rating: @Model.Movie.ReleaseDate.ToString("dd/MM/yyyy")</h4>
 
                     </div>
                     <p class="movie-desc">@Model.Movie.Overview</p>
@@ -96,7 +98,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="comment-box" style="padding: 10px;">
-            <form asp-action="NewMComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
+            <form asp-action="NewComment" asp-controller="Movies" asp-route-Movieid="@Model.Movie.Id">
                 <label for="text"><img class="rounded-circle" src="~/img/iconQ.jpg" width="40"></label>
                 <input type="text" name="text" placeholder="Comment Here">
             </form>

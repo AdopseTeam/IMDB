@@ -18,7 +18,7 @@ namespace MvcActor.Data
             JArray actorsObject = new JArray();
 
             string detailsUrlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US";
-            for (int i = 1; i < 50; i++) {
+            for (int i = 1; i < 10; i++) {
                 const string URL = "https://api.themoviedb.org/3/person/popular";
                 string urlParameters = $"?api_key={Environment.GetEnvironmentVariable("API")}&language=en-US&page={i}";
                 var seriesReponse = HTTP.Response.returnResponse(URL, urlParameters);
