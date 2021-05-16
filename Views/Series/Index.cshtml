@@ -36,7 +36,7 @@
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.ReleaseDate):</strong> @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Seasons):</strong> @Html.DisplayFor(modelItem => item.Seasons)</p>
                             <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Genre):</strong> @Html.DisplayFor(modelItem => item.Genre)</p>
-                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Rating):</strong> @Html.DisplayFor(modelItem => item.Rating)</p>
+                            <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Rating):</strong> @item.Rating.ToString("#.#")</p>
                         </div> <br>
                         <a class="btn btn-warning" asp-controller="Series" asp-action="Details" asp-route-id="@item.Id">More info</a>
                     </div>
